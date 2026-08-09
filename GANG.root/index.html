@@ -10,12 +10,21 @@
 
 <body>
     <h1>GANG.root – Startpunkt</h1>
-    <pre id="out">Axiom3E wird geladen...</pre>
+    <pre id="out">Lade Axiom3E...</pre>
 
     <script type="module">
         import { Axiom3E } from './Axiom3E.link.js';
+
         const out = document.getElementById('out');
-        out.textContent = JSON.stringify(Axiom3E, null, 2);
+
+        if (Axiom3E) {
+            out.textContent =
+                "STATUS: GANG AKTIV\n\n" +
+                JSON.stringify(Axiom3E, null, 2);
+        } else {
+            out.textContent =
+                "FEHLER: GANG NICHT GELADEN";
+        }
     </script>
 </body>
 </html>
