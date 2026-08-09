@@ -1,0 +1,12 @@
+# AIRchess – Grundbrett
+# 9×9 Felder, 0 = leer, Buchstaben = Figuren
+
+d1 d2 d3 d4 d5 d6 d7 d8 d9
+e1 e2 e3 e4 e5 e6 e7 e8 e9
+i1 i2 i3 i4 i5 i6 i7 i8 i9
+n1 n2 n3 n4 n5 n6 n7 n8 n9
+o1 o2 o3 o4 o5 o6 o7 o8 o9
+r1 r2 r3 r4 r5 r6 r7 r8 r9
+s1 s2 s3 s4 s5 s6 s7 s8 s9
+u1 u2 u3 u4 u5 u6 u7 u8 u9
+w1 w2 w3 w4 w5 w6 w7 w8 w9

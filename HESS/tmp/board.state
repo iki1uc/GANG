@@ -1,0 +1,7 @@
+# board.state – aktueller Zustand
+
+STATE:
+- turn
+- active player
+- vector pressure
+- carry potential

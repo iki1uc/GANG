@@ -1,0 +1,63 @@
+#COIN-ROOM
+NAME: COIN
+TYPE: CONTINUUM-CORE-AXIOM
+MODE: RESPO+AXIOM
+STATE: ACTIVE
+
+DESCRIPTION:
+COIN ist die Verschmelzung von C.room (Cluster) und OIN.room (Axiom).
+Er bildet den zentralen Raum des Continuums und dient als Kernpunkt
+für Axiome, TMP-Module, RESPO-Scans, Operator-Sprünge und Matrix-Systeme.
+Kein Sprung ist vergebens, da alle Sprünge im COIN ankommen.
+
+AXIOME (6e):
+- T-Axiom  (Träger)
+- X-Axiom  (Kreuzpunkt)
+- Y-Axiom  (Fächer)
+- C-Axiom  (Konstellation)
+- KI-Axiom (Intelligenz)
+- E-Axiom  (Energie / Orbit)
+
+4R-STELLUNG:
+- Re-ORG  → Grundordnung der Axiome
+- Re-CALL → Rückruf der Axiome nach Abhängigkeit
+- Re-FIX  → Stabilisierung der 4 Grundachsen (T/X/Y/C)
+- Re-FIT  → Anpassung an Matrix und Continuum
+- Re-FI(n) → Feinabgleich der Axiom-Kreisläufe
+- Re-FINAL → Endgültige COIN-Konstellation
+
+MATRIX:
+- Zentrum der 9×9 OIN-Matrix (Position 4,4)
+- Zentrum der 3×27 JOIN-Matrix
+- KI-Axiom auf Diagonalen
+- E-Axiom im Orbit-Ring
+- T/X/Y bilden die Basisachsen
+
+RESPO:
+- COIN.respo = C.respo + OIN.respo (verstärkt)
+- RESPO_ARG_SCAN aktiv
+- Score-Engine aktiv
+
+TMP-MODULE:
+- 34 TMP-Module werden zu Axiom-Clustern
+- TMP → T/X/Y/KI/E-Zuordnung durch Continuum
+
+LINKS:
+- JUMP → COIN → OIN
+- RESPO → COIN → NC
+- TMP → COIN → Axiom
+- J → COIN → ROOM
+- OPERATOR → COIN → VECTOR
+
+OPERATOR:
+- RUN
+- SCAN
+- VECTOR
+- LINK
+- SHIFT
+- JUMP
+
+STATUS:
+READY = TRUE
+CONTINUUM = STABIL
+AXIOM = 6e

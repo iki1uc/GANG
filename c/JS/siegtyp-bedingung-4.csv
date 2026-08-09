@@ -1,0 +1,5 @@
+﻿Siegtyp,Bedingung
+Punkte‑Sieg,SCORE ≥ 120
+KO‑Sieg,Damage ≥ 3
+Profi‑Sieg,PROF ≥ 40
+Continuum‑Überladung,COIN‑WERT ≥ 36

@@ -1,0 +1,31 @@
+# Z.room – Continuum für UNLINEAR · AIRCHESS · HESS
+
+CONTINUUM:
+Q      = Quantum
+QI     = Quantum-Intelligenz
+IQQ    = Inter-Quantum-Queue
+HESS   = Battle
+ENGINE = UNLINEAR
+
+FLOW = Q → QI → IQQ → HESS → ENGINE
+
+DIMENSIONEN:
+BASE   = 6D
+EXT    = 12D
+FULL   = 36D
+
+ZEIT:
+Slide³ = (t1×1) + (t2×2)² + (t3×3)³
+Speed³ = 3×3³
+
+WERT:
+Bonus  = bonus(piece)
+Score  = AXIOM + PUZZLE + Slide_total
+
+START:
+MODE   = AIRCHESS
+DEPTH  = 6
+SPEED  = X4,X8
+SELF   = TRUE
+
+CALL = index.html

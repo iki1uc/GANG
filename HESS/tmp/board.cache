@@ -1,0 +1,7 @@
+# board.cache – Zwischenspeicher
+
+CACHE:
+- last_board
+- last_vectors
+- last_effect
+

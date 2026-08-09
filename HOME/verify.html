@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>HOME · VERIFY · Score · Gewinner · 5D/6D/7D</title>
+
+<style>
+  body { background:#000; color:#00ffff; font-family:Consolas; padding:20px; }
+  h1,h2 { color:#33ccff; text-shadow:0 0 10px #00ffff; }
+  .block { background:#111; border:1px solid #333; padding:15px; margin:20px 0; border-radius:8px; }
+  pre { background:#000; border:1px solid #333; padding:12px; border-radius:6px; }
+</style>
+
+<script>
+// Datei laden
+async function load(name){
+  try{
+    const r = await fetch("./" + name);
+    if(!r.ok) return null;
+    return await r.text();
+  }catch(e){
+    return null;
+  }
+}
+
+// CSV summieren
+function sumCSV(txt){
+  if(!txt) return 0;
+  return txt
+    .split("\n")
+    .map(x => parseFloat(x.trim()))
+    .filter(x => !isNaN(x))
+    .reduce((a,b)=>a+b,0);
+}
+
+// SHA256
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+async function start(){
+
+  // Werte laden
+  const BEN = parseFloat(await load("../BEN/BEN.tmp")) || 0;
+  const ZOOM = parseFloat(await load("../ZOOM/ZOOM.value")) || 0;
+  const ORT = parseFloat(await load("../ORT/ORT.value")) || 0;
+  const HOME = parseFloat(await load("HOME.value")) || 0;
+
+  const D5 = sumCSV(await load("bedeutung_5.csv"));
+  const D6 = sumCSV(await load("bedeutung_6.csv"));
+  const D7 = sumCSV(await load("bedeutung_7.csv"));
+
+  const ADD = await load("ADD.room");
+
+  // Score berechnen
+  const HOME_SCORE =
+    (BEN * 0.1) +
+    (ZOOM * 0.2) +
+    (ORT * 0.3) +
+    (HOME * 0.4) +
+    (D5 + D6 + D7);
+
+  const Kandidat = "Kandidat_A"; // später dynamisch
+
+  const WINNER_CODE = await sha256(HOME_SCORE + Kandidat);
+  const WINNER_NAME = Kandidat;
+  const WINNER_STORY = "Ergebnis basierend auf allen HOME‑Dimensionen.";
+
+  // Ausgabe
+  document.getElementById("score").textContent = HOME_SCORE.toFixed(2);
+  document.getElementById("name").textContent = WINNER_NAME;
+  document.getElementById("code").textContent = WINNER_CODE;
+  document.getElementById("story").textContent = WINNER_STORY;
+
+  document.getElementById("add").textContent = ADD || "ADD.room fehlt";
+}
+</script>
+</head>
+
+<body onload="start()">
+
+<h1>HOME · VERIFY · Score · Gewinner · 5D/6D/7D</h1>
+
+<div class="block">
+  <h2>HOME‑Score</h2>
+  <pre id="score">…</pre>
+</div>
+
+<div class="block">
+  <h2>Gewinner‑Name</h2>
+  <pre id="name">…</pre>
+</div>
+
+<div class="block">
+  <h2>Gewinner‑Code</h2>
+  <pre id="code">…</pre>
+</div>
+
+<div class="block">
+  <h2>Gewinner‑Story</h2>
+  <pre id="story">…</pre>
+</div>
+
+<div class="block">
+  <h2>ADD.room</h2>
+  <pre id="add">…</pre>
+</div>
+
+</body>
+</html>

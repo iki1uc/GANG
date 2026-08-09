@@ -1,0 +1,12 @@
+pos_x,
+pos_y,
+piece_type,
+color,
+vector_direction,
+carry_effect,
+lage_value,
+tiefe_value,
+momentum_value,
+slide_value,
+speed3_value,
+bonus_value

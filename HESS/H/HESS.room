@@ -1,0 +1,17 @@
+# HESS.room – Autostart für UNLINEAR AIRCHESS
+
+AUTOSTART:
+FROM = C.room
+MODE = AIRCHESS
+ENGINE = UNLINEAR
+DEPTH = 6
+SPEED = X4,X8
+SELFPLAY = TRUE
+
+LOAD:
+- core/AIRchess 9mal9mal12D.raw
+- core/AIRchess.6d
+- H/MOVES.POINTS
+- H/slide.room
+- score.tmp
+- H/ebene-bedeutung-6.csv

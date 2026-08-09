@@ -1,0 +1,21 @@
+#H-ROOM
+NAME: H
+TYPE: HEIGHT-AXIOM
+MODE: FIGURE-DEPTH
+STATE: ACTIVE
+
+DESCRIPTION:
+H bewertet Figuren nach Höhe, Tiefe, Axiom-Level und Lage.
+H entscheidet, ob ein Zug überhaupt Punkte verdient.
+
+AXIOM:
+- Y-Axiom (Höhe)
+- KI-Axiom (Diagonal)
+- E-Axiom (Orbit)
+
+FUNCTION:
+- Figuren-Wert
+- Figuren-Lage
+- Figuren-Tiefe
+- Figuren-Axiom
+- Figuren-Score

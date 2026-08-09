@@ -1,0 +1,10 @@
+# HESS.room – Autostart für UNLINEAR AIRCHESS
+
+AUTOSTART = TRUE
+MODE      = AIRCHESS
+ENGINE    = UNLINEAR
+DEPTH     = 6
+SPEED     = X4,X8
+SELFPLAY  = TRUE
+
+CALL = index.html

@@ -1,0 +1,27 @@
+#SLIDE-ROOM
+NAME: SLIDE
+TYPE: TRIUMPHDIM
+STATE: ACTIVE
+
+# Grund-SLIDE
+SLIDE_BASE = (ΔLage × ΔTiefe × ΔMomentum)
+SLIDE_BASE = ΔLage + (ΔTiefe²) + (ΔMomentum³)
+
+# Zeitdimensionen
+TIME1 = (t1 × 1)
+TIME2 = (t2 × 2)²
+TIME3 = (t3 × 3)³
+
+# Dreieck-Summe
+SLIDE_TRI = TIME1 + TIME2 + TIME3
+
+# Speed³-Bonus
+IF (moves_in_last_2_seconds >= 3)
+THEN SPEED³ = (3 × 3³)
+ELSE SPEED³ = 0
+
+# Figur-Bonus
+FIGUR_BONUS = bonus(piece_type)
+
+# Finaler Slide-Wert
+SLIDE_TOTAL = SLIDE_BASE + SLIDE_TRI + SPEED³ + FIGUR_BONUS

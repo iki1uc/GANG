@@ -1,0 +1,22 @@
+#H-ROOM
+NAME: H
+TYPE: HEIGHT-AXIOM
+MODE: COIN-EXT
+STATE: ACTIVE
+
+DESCRIPTION:
+H ist der Höhenraum des COIN-Continuums.
+Er verbindet T (Breite), X (Tiefe) und Y (Höhe) zu einem räumlichen 6e-Körper.
+H schließt die geometrische Struktur des COIN-Schachs.
+Ohne H existiert nur Fläche — mit H entsteht Raum.
+
+AXIOM:
+- Y-Axiom (Höhe)
+- KI-Axiom (Diagonal)
+- E-Axiom (Orbit)
+
+FUNKTION:
+- Erzeugt Tiefe für 9×9 Schach
+- Aktiviert 3D-Kampf-Schach
+- Ermöglicht Score-Skalierung
+- Bindet alle Figuren in räumliche Wertigkeit ein

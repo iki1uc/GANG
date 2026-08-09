@@ -1,0 +1,8 @@
+﻿Daten‑Pool,Stärke,Schwäche,Empfehlung
+81.tmp,"Schnell, flexibel, perfekt für Pulse & tmp",Kein Langzeit‑Speicher,Behalten als Cache
+HH.tmp‑Module,"Semantik, Bedeutung",Kein Storage‑System,Nur als Layer nutzen
+LIVE‑BRIDGE,Pulse‑Engine,Kein Speicher,Nur als Input
+GATE,Achsen‑Routing,Kein Storage,Nur als Logik
+EXPORT,Output,Kein Storage,Nur als Output
+WLOCH,Stabilisation,Kein Storage,Nur als Regler
+DEEPSPACEMIND,Bewusstsein,braucht Storage,braucht 81.tmp + Hyper‑Lake

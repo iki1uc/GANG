@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>C · INDEX</title>
+
+<style>
+body { font-family: Arial; background:#111; color:#eee; }
+h1 { color:#6cf; }
+.section { margin-bottom:20px; padding:10px; border:1px solid #333; }
+pre { background:#222; padding:10px; }
+#board { margin-top:20px; }
+.cell {
+  width:40px; height:40px; display:inline-block;
+  border:1px solid #333; text-align:center; line-height:40px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>C · OPERATOR-INDEX</h1>
+
+<div class="section">
+  <h2>QI (Pipeline 3)</h2>
+  <pre id="qiOut">QI wird geladen…</pre>
+</div>
+
+<div class="section">
+  <h2>IQQ (Pipeline 6)</h2>
+  <pre id="iqqOut">IQQ wird geladen…</pre>
+</div>
+
+<div class="section">
+  <h2>C-Operatoren</h2>
+  <pre id="opsOut">Operatoren werden geladen…</pre>
+</div>
+
+<div class="section">
+  <h2>9×9 COIN-SCHACH</h2>
+  <div id="board"></div>
+</div>
+
+<div class="section">
+  <h2>Score</h2>
+  <pre id="score"></pre>
+</div>
+
+<div class="section">
+  <h2>Operator</h2>
+  <pre id="operator"></pre>
+</div>
+
+<div class="section">
+  <h2>Status</h2>
+  <pre id="status"></pre>
+</div>
+
+<script type="module">
+
+// ------------------------------------------------------------
+// Loader
+// ------------------------------------------------------------
+async function load(path) {
+  const res = await fetch(path);
+  return res.text();
+}
+
+// ------------------------------------------------------------
+// CONTINUUM-START (Z → Q → QI → IQQ → HESS → Engine)
+// ------------------------------------------------------------
+async function continuumStart() {
+
+  const Z    = await load("Z/Z.room");
+  const CONT = await load("Z/continium.room");
+  const Q    = await load("Q/Q.room");
+  const QI   = await load("Q/QI.room");
+  const IQQ  = await load("Q/IQQ.room");
+  const HESS = await load("H/HESS.room");
+
+  window.CONTINUUM = { Z, CONT, Q, QI, IQQ, HESS };
+
+  document.getElementById("status").innerText =
+    "CONTINUUM aktiv:\n" +
+    "Z → Q → QI → IQQ → HESS → Engine";
+}
+
+// ------------------------------------------------------------
+// Pipeline Imports
+// ------------------------------------------------------------
+import { QI } from "../CUBE-MIND/Pipeline 3/QI.js";
+import { IQQ } from "../CUBE-MIND/Pipeline 6/IQQ.js";
+
+// ------------------------------------------------------------
+// CSV/TMP Loader
+// ------------------------------------------------------------
+import { loadCSV, loadTMP } from "./JS/loader.js";
+
+// ------------------------------------------------------------
+// Renderer
+// ------------------------------------------------------------
+import { renderBoard9x9, renderScore, renderOperator, renderStatus } from "./JS/renderer.js";
+
+// ------------------------------------------------------------
+// AUTOSTART
+// ------------------------------------------------------------
+window.onload = async () => {
+
+  await continuumStart();
+
+  const qiResult = QI();
+  document.getElementById("qiOut").innerText =
+    JSON.stringify(qiResult, null, 2);
+
+  const iqqResult = IQQ();
+  document.getElementById("iqqOut").innerText =
+    JSON.stringify(iqqResult, null, 2);
+
+  loadCSV("axiom-rolle-6.csv");
+  loadCSV("axiom-wert-6.csv");
+  loadCSV("figur-axiom-6.csv");
+  loadCSV("zug-axiom-4.csv");
+  loadCSV("siegtyp-bedingung-4.csv");
+
+  loadTMP("SCHACH.tmp");
+  loadTMP("schachac.tmp");
+  loadTMP("score.tmp");
+  loadTMP("operator.tmp");
+  loadTMP("tetriz.tmp");
+
+  loadTMP("bauer.tmp");
+  loadTMP("pferd.tmp");
+  loadTMP("laufer.tmp");
+  loadTMP("turm.tmp");
+  loadTMP("dame.tmp");
+  loadTMP("König.tmp");
+
+  renderBoard9x9("board");
+  renderScore("score");
+  renderOperator("operator");
+  renderStatus("status");
+
+  document.getElementById("opsOut").innerText =
+    JSON.stringify(window.ops || {}, null, 2);
+};
+
+</script>
+
+</body>
+</html>

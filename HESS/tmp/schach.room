@@ -1,0 +1,7 @@
+# schach.room – tmp Version
+
+TMP_ROOM:
+- traversal buffer
+- effect buffer
+- sampling buffer
+

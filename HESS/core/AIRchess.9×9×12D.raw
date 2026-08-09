@@ -1,0 +1,8 @@
+RAW_STREAM:
+- board states (9×9)
+- vector transitions (12D)
+- traversal paths (AIR)
+- effect sizes (carry + momentum)
+- slide values
+- speed3 values
+- bonus values

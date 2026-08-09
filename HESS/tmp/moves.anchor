@@ -1,0 +1,6 @@
+# moves.anchor – Startpunkte für Traversal
+
+ANCHORS:
+- forward_start
+- backward_start
+- mirrored_start

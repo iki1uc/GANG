@@ -1,0 +1,47 @@
+{
+  "game": "schach-reib",
+  "mode": "reib-system",
+  "state": "active",
+
+  "reib.core": {
+    "axis": 12,
+    "dim": 6,
+    "matrix": "9x9",
+    "tmp.bind": "nc.tmp/operator.tmp"
+  },
+
+  "reib.vector": {
+    "move.axes": [
+      "+X", "-X",
+      "+Y", "-Y",
+      "+Z", "-Z"
+    ],
+    "octa": 8,
+    "schach.patterns": {
+      "pferd": "L-sprung",
+      "dame": "diag+line",
+      "bauer": "step",
+      "octa": "8-wege"
+    }
+  },
+
+  "reib.state": {
+    "start": "reib-start",
+    "move": "reib-move",
+    "bind": "reib-bind",
+    "score": "reib-score"
+  },
+
+  "reib.logic": {
+    "collision": true,
+    "vector.check": true,
+    "axis.lock": false,
+    "tmp.integrity": "OK"
+  },
+
+  "reib.score": {
+    "output": "nc.tmp/score.tmp",
+    "mode": "9x9",
+    "active": true
+  }
+}

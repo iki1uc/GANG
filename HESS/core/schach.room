@@ -1,0 +1,8 @@
+1ch.room – Engine Raum
+
+ROOM:
+- active_board
+- active_vectors
+- traversal_mode
+- effect_buffer
+

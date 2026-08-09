@@ -1,0 +1,70 @@
+COIN-AXIOM-FINAL
+----------------
+R1: T-Axiom (Halt)
+R2: X-Axiom (Verbindung)
+R3: Y-Axiom (Richtung)
+R4: C-Axiom (Konstellation)
+R5: KI-Axiom (Intelligenz)
+R6: E-Axiom (Energie / Orbit)
+
+Matrix: 9×9
+Zentrum: C
+Orbit: E
+Diagonal: KI
+Basis: T / X / Y
+COIN-SCHACH
+-----------
+Typ: Kampf-Schach
+Brett: 9×9
+Sieg: Punkte, KO, Damage — nicht Matt
+Zugwertung: Score-System
+Bonus: Schäferzug = +1024
+Bewertung: Professionalität, Redundanz, Risiko
+Mechanik: Boxkampf-Prinzip
+T = 2¹ = 2
+
+X = 2² = 4
+
+Y = 2³ = 8
+
+C = 2⁴ = 16
+
+KI = 2⁵ = 32
+
+E = 2⁶ = 64
+T → 2² = 4
+
+X → 2⁴ = 16
+
+Y → 2⁶ = 64
+
+C → 2⁸ = 256
+
+KI → 2¹⁰ = 1024
+
+E → 2¹² = 4096
+Schäferzug → KI‑Level → 1024
+
+Doppelangriff → Y‑Level → 64
+
+Opferzug → C‑Level → 256
+
+KO‑Schlag → E‑Level → 4096
+„man kann gewinnen ohne matt“
+
+Hier ist die korrekte COIN‑Sieglogik:
+
+Sieg durch Punkte
+Wenn SCORE ≥ 2048 → Sieg
+
+Sieg durch KO
+Wenn Damage ≥ 3 → KO
+
+Sieg durch Professionalität
+Wenn PROF ≥ 512 → Sieg
+
+Sieg durch Continuum‑Überladung
+Wenn COIN‑WERT ≥ 4096 → Sieg
+
+König ist egal
+Matt existiert nicht

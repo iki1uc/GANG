@@ -1,0 +1,5 @@
+
+TRAVERSAL = E1,E2,E3,E4,E5,E6
+TENSOR    = 12D
+BOARD     = 9×9
+CALL      = HESS.room

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>HOME · RUN 8 · Final Index · Score · Story · Vector · Markt</title>
+
+<style>
+  body { background:#000; color:#00ffff; font-family:Consolas; padding:20px; }
+  h1 { color:#33ccff; text-shadow:0 0 10px #00ffff; margin-bottom:20px; }
+
+  .panel {
+    background:#111;
+    border:1px solid #333;
+    padding:15px;
+    margin:20px 0;
+    border-radius:8px;
+  }
+
+  .panel h2 {
+    color:#33ccff;
+    margin-top:0;
+  }
+
+  pre {
+    background:#000;
+    border:1px solid #333;
+    padding:12px;
+    border-radius:6px;
+    white-space:pre-wrap;
+  }
+
+  .btn {
+    background:#004466;
+    color:#00ffff;
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    margin-right:10px;
+  }
+
+  .btn:hover {
+    background:#006699;
+  }
+</style>
+
+<script>
+// ------------------------------------------------------
+// Loader
+// ------------------------------------------------------
+
+async function load(path){
+  try{
+    const r = await fetch(path);
+    if(!r.ok) return null;
+    return await r.text();
+  }catch(e){
+    return null;
+  }
+}
+
+function sumCSV(txt){
+  if(!txt) return 0;
+  return txt.split("\n")
+    .map(v => parseFloat(v.trim()))
+    .filter(v => !isNaN(v))
+    .reduce((a,b)=>a+b,0);
+}
+
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash))
+    .map(b => b.toString(16).padStart(2,"0"))
+    .join("");
+}
+
+// ------------------------------------------------------
+// Markt- & Wertbildung
+// ------------------------------------------------------
+
+function marktAnalyse(score){
+  if(score < 50) return "Marktlage: Schwach · Risiko hoch";
+  if(score < 120) return "Marktlage: Neutral · Stabilität mittel";
+  if(score < 200) return "Marktlage: Stark · Gute Wertbildung";
+  return "Marktlage: Sehr stark · Wertbildung maximal";
+}
+
+function wertBildung(D5, D6, D7){
+  const sum = D5 + D6 + D7;
+  if(sum < 50) return "Wertbildung: niedrig";
+  if(sum < 150) return "Wertbildung: mittel";
+  if(sum < 300) return "Wertbildung: hoch";
+  return "Wertbildung: extrem";
+}
+
+// ------------------------------------------------------
+// RUN 8 HOME
+// ------------------------------------------------------
+
+async function RUN8(){
+
+  // Rohwerte laden
+  const BEN  = parseFloat(await load("../BEN/BEN.tmp")) || 0;
+  const ZOOM = parseFloat(await load("../ZOOM/ZOOM.value")) || 0;
+  const ORT  = parseFloat(await load("../ORT/ORT.value")) || 0;
+  const HOME = parseFloat(await load("./HOME.value")) || 0;
+
+  // Dimensionen laden
+  const D5 = sumCSV(await load("./bedeutung_5.csv"));
+  const D6 = sumCSV(await load("./bedeutung_6.csv"));
+  const D7 = sumCSV(await load("./bedeutung_7.csv"));
+
+  // ADD.room laden
+  const ADD = await load("./ADD.room");
+
+  // Score berechnen
+  const SCORE =
+    (BEN * 0.1) +
+    (ZOOM * 0.2) +
+    (ORT * 0.3) +
+    (HOME * 0.4) +
+    (D5 + D6 + D7);
+
+  // Story erzeugen
+  const STORY = `
+BEN → ${BEN}
+ZOOM → ${ZOOM}
+ORT → ${ORT}
+HOME → ${HOME}
+
+5D → ${D5}
+6D → ${D6}
+7D → ${D7}
+
+Finale Story:
+HOME zeigt die vollständige Realität des Kandidaten.
+`;
+
+  // Vector erzeugen
+  const VECTOR = {
+    NC2: STORY.length,
+    D6: STORY.split("\n").length,
+    E12: STORY.includes("ERR") ? "kritisch" : "neutral"
+  };
+
+  // Gewinner
+  const Kandidat = "Kandidat_A";
+  const CODE = await sha256(SCORE + Kandidat);
+
+  // Markt & Wertbildung
+  const MARKT = marktAnalyse(SCORE);
+  const WERT  = wertBildung(D5, D6, D7);
+
+  // Ausgabe
+  document.getElementById("score").textContent  = SCORE.toFixed(2);
+  document.getElementById("story").textContent  = STORY;
+  document.getElementById("vector").textContent = JSON.stringify(VECTOR, null, 2);
+  document.getElementById("winner").textContent = Kandidat;
+  document.getElementById("code").textContent   = CODE;
+  document.getElementById("markt").textContent  = MARKT;
+  document.getElementById("wert").textContent   = WERT;
+  document.getElementById("add").textContent    = ADD || "ADD.room fehlt";
+}
+</script>
+</head>
+
+<body onload="RUN8()">
+
+<h1>HOME · RUN 8 · Final Index</h1>
+
+<div class="panel">
+  <h2>HOME‑Score</h2>
+  <pre id="score">…</pre>
+</div>
+
+<div class="panel">
+  <h2>HOME‑Story</h2>
+  <pre id="story">…</pre>
+</div>
+
+<div class="panel">
+  <h2>HOME‑Vector</h2>
+  <pre id="vector">…</pre>
+</div>
+
+<div class="panel">
+  <h2>Marktlage</h2>
+  <pre id="markt">…</pre>
+</div>
+
+<div class="panel">
+  <h2>Wertbildung</h2>
+  <pre id="wert">…</pre>
+</div>
+
+<div class="panel">
+  <h2>Gewinner</h2>
+  <pre id="winner">…</pre>
+</div>
+
+<div class="panel">
+  <h2>Gewinner‑Code</h2>
+  <pre id="code">…</pre>
+</div>
+
+<div class="panel">
+  <h2>ADD.room</h2>
+  <pre id="add">…</pre>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>HOME · VERIFY · Final Engine</title>
+
+<style>
+  body { background:#000; color:#00ffff; font-family:Consolas; padding:20px; }
+  h1,h2 { color:#33ccff; }
+  .block { background:#111; border:1px solid #333; padding:15px; margin:20px 0; }
+  pre { background:#000; border:1px solid #333; padding:12px; }
+</style>
+
+<script>
+// Datei laden
+async function load(name){
+  try{
+    const r = await fetch("./" + name);
+    if(!r.ok) return 0;
+    return await r.text();
+  }catch(e){
+    return 0;
+  }
+}
+
+// CSV summieren
+function sumCSV(txt){
+  if(!txt) return 0;
+  return txt.split("\n").map(x=>parseFloat(x)).filter(x=>!isNaN(x)).reduce((a,b)=>a+b,0);
+}
+
+// Story-Engine
+function buildStory(BEN, ZOOM, ORT, HOME, D5, D6, D7){
+  return `
+BEN: ${BEN}
+ZOOM: ${ZOOM}
+ORT: ${ORT}
+HOME: ${HOME}
+
+5D: ${D5}
+6D: ${D6}
+7D: ${D7}
+
+Finale Story:
+HOME zeigt die vollständige Realität des Kandidaten.
+`;
+}
+
+// Vector-Engine
+function buildVector(story){
+  return {
+    NC2: story.length,
+    D6: story.split("\n").length,
+    E12: story.includes("ERR") ? "kritisch" : "neutral"
+  };
+}
+
+// SHA256
+async function sha256(str){
+  const buf = new TextEncoder().encode(str);
+  const hash = await crypto.subtle.digest("SHA-256", buf);
+  return Array.from(new Uint8Array(hash)).map(b=>b.toString(16).padStart(2,"0")).join("");
+}
+
+async function start(){
+
+  const BEN = parseFloat(await load("../BEN/BEN.tmp")) || 0;
+  const ZOOM = parseFloat(await load("../ZOOM/ZOOM.value")) || 0;
+  const ORT = parseFloat(await load("../ORT/ORT.value")) || 0;
+  const HOME = parseFloat(await load("HOME.value")) || 0;
+
+  const D5 = sumCSV(await load("bedeutung_5.csv"));
+  const D6 = sumCSV(await load("bedeutung_6.csv"));
+  const D7 = sumCSV(await load("bedeutung_7.csv"));
+
+  const SCORE =
+    (BEN * 0.1) +
+    (ZOOM * 0.2) +
+    (ORT * 0.3) +
+    (HOME * 0.4) +
+    (D5 + D6 + D7);
+
+  const STORY = buildStory(BEN, ZOOM, ORT, HOME, D5, D6, D7);
+  const VECTOR = buildVector(STORY);
+
+  const Kandidat = "Kandidat_A";
+  const CODE = await sha256(SCORE + Kandidat);
+
+  document.getElementById("score").textContent = SCORE.toFixed(2);
+  document.getElementById("story").textContent = STORY;
+  document.getElementById("vector").textContent = JSON.stringify(VECTOR, null, 2);
+  document.getElementById("winner").textContent = Kandidat;
+  document.getElementById("code").textContent = CODE;
+}
+</script>
+</head>
+
+<body onload="start()">
+
+<h1>HOME · VERIFY · Final Engine</h1>
+
+<div class="block">
+  <h2>HOME‑Score</h2>
+  <pre id="score">…</pre>
+</div>
+
+<div class="block">
+  <h2>HOME‑Story</h2>
+  <pre id="story">…</pre>
+</div>
+
+<div class="block">
+  <h2>HOME‑Vector</h2>
+  <pre id="vector">…</pre>
+</div>
+
+<div class="block">
+  <h2>Gewinner</h2>
+  <pre id="winner">…</pre>
+</div>
+
+<div class="block">
+  <h2>Gewinner‑Code</h2>
+  <pre id="code">…</pre>
+</div>
+
+</body>
+</html>

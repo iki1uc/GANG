@@ -1,0 +1,6 @@
+ENGINE   = UNLINEAR
+DEPTH    = 6
+SPEED    = X4,X8
+SELFPLAY = TRUE
+
+CALL = IQQ.room

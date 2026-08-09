@@ -1,0 +1,6 @@
+# moves.points – Endpunkte für Traversal
+
+POINTS:
+- forward_end
+- backward_end
+- mirrored_end

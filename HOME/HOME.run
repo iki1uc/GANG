@@ -1,0 +1,23 @@
+async function pipeline(){
+  const BEN = await load("../BEN/BEN.tmp");
+  const ZOOM = await load("../ZOOM/ZOOM.value");
+  const ORT = await load("../ORT/ORT.value");
+  const HOME = await load("HOME.value");
+
+  const D5 = sumCSV(await load("bedeutung_5.csv"));
+  const D6 = sumCSV(await load("bedeutung_6.csv"));
+  const D7 = sumCSV(await load("bedeutung_7.csv"));
+
+  const SCORE = 
+    (BEN * 0.1) +
+    (ZOOM * 0.2) +
+    (ORT * 0.3) +
+    (HOME * 0.4) +
+    (D5 + D6 + D7);
+
+  const STORY = buildStory(BEN, ZOOM, ORT, HOME, D5, D6, D7);
+
+  const VECTOR = buildVector(STORY);
+
+  return { SCORE, STORY, VECTOR };
+}

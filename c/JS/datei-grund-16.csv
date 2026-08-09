@@ -1,0 +1,17 @@
+﻿Datei,Grund,Link
+C.room,COIN‑Raum,zentral
+COIN.axiom,Axiom‑Definition,6e
+SCHACH.tmp,Schach‑Logik,9×9
+schachac.tmp,Schach‑Axiom‑Cluster,9×9
+bauer.tmp,Figur‑Modul,9×9
+pferd.tmp,Figur‑Modul,9×9
+dame.tmp,Figur‑Modul,9×9
+operator.tmp,Operator‑Sprünge,9×9
+score.tmp,Bewertung,9×9
+RESPO_ARG_SCAN.tmp,RESPO‑Scan,9×9
+axiom-rolle-6.csv,Axiom‑Rollen,6e
+datei-name-6.csv,Datei‑Mapping,6e
+stellung-axiom-4.csv,4R‑Stellung,COIN
+README.md,Dokumentation,COIN
+id.html,Identity,COIN
+index.html,UI,COIN

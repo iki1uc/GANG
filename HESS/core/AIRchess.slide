@@ -1,0 +1,21 @@
+function mobility(piece):
+    return vector(piece.pos) * piece.force * piece.tiefe_value
+
+function pressure(board):
+    return (sum(all vectors) / active pieces) * board.air_depth
+
+function carry_effect(prev, next):
+    return (next.vector - prev.vector) + next.momentum_value
+
+function slide_effect(move):
+    base = move.lage_value + (move.tiefe_value ** 2) + (move.momentum_value ** 3)
+    tri  = (move.time1 * 1) + (move.time2 * 2) ** 2 + (move.time3 * 3) ** 3
+    speed3 = (move.moves_last_2_seconds >= 3) ? 81 : 0
+    bonus = move.bonus_value
+    return base + tri + speed3 + bonus
+
+function air_total(move):
+    return mobility(move.piece)
+         + pressure(move.board)
+         + carry_effect(move.prev, move.next)
+         + slide_effect(move)

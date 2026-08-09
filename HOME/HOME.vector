@@ -1,0 +1,8 @@
+function buildVector(verify){
+  return {
+    NC2: verify.length,
+    D6: verify.split("\n").length,
+    E12: verify.includes("ERR") ? "kritisch" : "neutral",
+    FINAL: "NC²:" + verify.length + " | 6D:" + verify.split("\n").length
+  };
+}
