@@ -13,7 +13,8 @@
     <pre id="out">Axiom3E wird geladen...</pre>
 
     <script type="module">
-        import { Axiom3E } from "./Axiom3E.link.js";
+        import { Axiom3E } from './Axiom3E.link.js';
+        const out = document.getElementById('out');
         out.textContent = JSON.stringify(Axiom3E, null, 2);
     </script>
 </body>
