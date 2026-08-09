@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Agent – Kontrolle</title>
+    <style>
+        body{background:#000;color:#0f0;font-family:monospace;padding:20px;}
+        pre{background:#111;padding:20px;border:1px solid #333;}
+        button, input{background:#111;color:#0f0;border:1px solid #333;padding:8px 16px;margin:5px;}
+    </style>
+</head>
+
+<body>
+
+<h1>Agent – Kontrolle</h1>
+
+<!-- Lage / Ort -->
+<pre id="ort">Ort wird geladen...</pre>
+
+<!-- Score -->
+<h3>Score</h3>
+<pre id="score">0</pre>
+<button onclick="plus()">+1</button>
+<button onclick="minus()">-1</button>
+
+<!-- Wette -->
+<h3>Wette</h3>
+<pre id="wette">keine</pre>
+<button onclick="setWette('hoch')">hoch</button>
+<button onclick="setWette('mittel')">mittel</button>
+<button onclick="setWette('niedrig')">niedrig</button>
+
+<!-- Slide -->
+<h3>Slide</h3>
+<input type="range" min="0" max="100" value="50" id="slide" oninput="updateSlide()">
+<pre id="slideOut">50</pre>
+
+<script type="module">
+import { agent } from "./agent.js";
+
+document.getElementById("ort").textContent =
+    "Modul: " + agent.modul + "\n" +
+    "Typ: " + agent.typ + "\n" +
+    "Status: " + agent.status;
+
+// SCORE
+let score = 0;
+function plus(){ score++; document.getElementById("score").textContent = score; }
+function minus(){ score--; document.getElementById("score").textContent = score; }
+
+// WETTE
+function setWette(w){
+    document.getElementById("wette").textContent = w;
+}
+
+// SLIDE
+function updateSlide(){
+    const val = document.getElementById("slide").value;
+    document.getElementById("slideOut").textContent = val;
+}
+</script>
+
+</body>
+</html>
