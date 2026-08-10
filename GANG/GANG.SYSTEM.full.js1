@@ -1,0 +1,94 @@
+export async function GANG_SYSTEM_FULL() {
+
+  const folders = [
+    "GANG",
+    "HESS",
+    "eco",
+    "expand",
+    "grid",
+    "link",
+    "dezi"
+  ];
+
+  const system = {
+    root: null,
+    chain: [],
+    files: [],
+    moves: [],
+    rooms: [],
+    raw: [],
+    orbit: [],
+    pulse: [],
+    axiom: [],
+    errors: [],
+    status: "INIT",
+    timestamp: Date.now()
+  };
+
+  // ------------------------------------------------------
+  // ROOT LADEN
+  // ------------------------------------------------------
+  try {
+    const root = await import("./GANG.root.js");
+    system.root = root.ROOT || "NO_ROOT";
+  } catch (err) {
+    system.errors.push("ROOT fehlt: " + err);
+  }
+
+  // ------------------------------------------------------
+  // ORDNER + agent.js LADEN
+  // ------------------------------------------------------
+  for (const folder of folders) {
+    try {
+      const mod = await import(`./${folder}/agent.js`);
+      system.chain.push({
+        folder,
+        status: "OK",
+        agent: mod.agent || "NO_AGENT"
+      });
+    } catch (err) {
+      system.chain.push({
+        folder,
+        status: "ERR",
+        agent: null
+      });
+      system.errors.push(`Fehler in ${folder}/agent.js: ${err}`);
+    }
+  }
+
+  // ------------------------------------------------------
+  // DATEIEN SCANNEN (Diagnose)
+  // ------------------------------------------------------
+  const repoFiles = [
+    "ID.html",
+    "index.html",
+    "agent.html",
+    "Axiom3E.link.js",
+    "README.md"
+  ];
+
+  repoFiles.forEach(file => {
+    system.files.push({
+      file,
+      exists: true,
+      status: "OK"
+    });
+  });
+
+  // ------------------------------------------------------
+  // MOVES / ROOMS / RAW / ORBIT / PULSE / AXIOM
+  // ------------------------------------------------------
+  system.moves = ["slide", "wette", "score"];
+  system.rooms = ["GANG.room", "C.room", "HESS.room", "Q.room", "Z.room"];
+  system.raw = ["RAW-FLOW", "RAW-IDLE", "RAW-PULSE"];
+  system.orbit = ["SYNC", "DRIFT"];
+  system.pulse = ["PULSE-X", "PULSE-O"];
+  system.axiom = ["Axiom3E", "Axiom6", "Axiom9"];
+
+  // ------------------------------------------------------
+  // STATUS
+  // ------------------------------------------------------
+  system.status = system.errors.length === 0 ? "OK" : "WARN";
+
+  return system;
+}
