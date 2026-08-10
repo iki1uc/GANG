@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>GANG.SYSTEM.full — iki1uc</title>
+
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+  .ok { color:#0f0; }
+  .err { color:#f00; }
+  .item { margin-bottom:10px; }
+  .section { margin-top:20px; border:1px solid #0f0; padding:10px; }
+</style>
+</head>
+
+<body>
+
+<h1>GANG.SYSTEM.full — iki1uc</h1>
+<p>ROOT → Ordner → agent.js → Räume → Moves → RAW → eco → AIR → Bewertung</p>
+
+<div id="out"></div>
+
+<script type="module">
+  import { GANG_SYSTEM_FULL } from "./GANG.SYSTEM.full.js";
+
+  async function load() {
+    const sys = await GANG_SYSTEM_FULL();
+    const div = document.getElementById("out");
+
+    // ROOT
+    div.innerHTML += `
+      <div class="section">
+        <h2>ROOT</h2>
+        <div class="ok">${sys.root}</div>
+      </div>
+    `;
+
+    // ORDNER-KETTE
+    div.innerHTML += `<div class="section"><h2>Ordner-Kette</h2>`;
+    sys.chain.forEach(item => {
+      const symbol = item.status === "OK" ? "⭕" : "❌";
+      const cls = item.status === "OK" ? "ok" : "err";
+      div.innerHTML += `<div class="item ${cls}">${symbol} ${item.folder} → ${item.agent || "NO_AGENT"}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // DATEIEN
+    div.innerHTML += `<div class="section"><h2>Dateien</h2>`;
+    sys.files.forEach(f => {
+      div.innerHTML += `<div class="item ok">📄 ${f.file}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // MOVES
+    div.innerHTML += `<div class="section"><h2>Moves</h2>`;
+    sys.moves.forEach(m => {
+      div.innerHTML += `<div class="item ok">➡️ ${m}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // ROOMS
+    div.innerHTML += `<div class="section"><h2>Rooms</h2>`;
+    sys.rooms.forEach(r => {
+      div.innerHTML += `<div class="item ok">🏛️ ${r}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // RAW
+    div.innerHTML += `<div class="section"><h2>RAW</h2>`;
+    sys.raw.forEach(r => {
+      div.innerHTML += `<div class="item ok">⚡ ${r}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // ORBIT
+    div.innerHTML += `<div class="section"><h2>Orbit</h2>`;
+    sys.orbit.forEach(o => {
+      div.innerHTML += `<div class="item ok">🌀 ${o}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // PULSE
+    div.innerHTML += `<div class="section"><h2>Pulse</h2>`;
+    sys.pulse.forEach(p => {
+      div.innerHTML += `<div class="item ok">💥 ${p}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // AXIOM
+    div.innerHTML += `<div class="section"><h2>Axiom</h2>`;
+    sys.axiom.forEach(a => {
+      div.innerHTML += `<div class="item ok">📐 ${a}</div>`;
+    });
+    div.innerHTML += `</div>`;
+
+    // FEHLER
+    if (sys.errors.length > 0) {
+      div.innerHTML += `
+        <div class="section err">
+          <h2>Fehler</h2>
+          <pre>${JSON.stringify(sys.errors, null, 2)}</pre>
+        </div>
+      `;
+    }
+  }
+
+  load();
+</script>
+
+</body>
+</html>
