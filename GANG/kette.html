@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>GANG.KETTE — iki1uc</title>
+
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+  .item { margin-bottom:10px; }
+  .ok { color:#0f0; }
+  .err { color:#f00; }
+</style>
+</head>
+
+<body>
+
+<h1>GANG.KETTE — iki1uc</h1>
+<p>ROOT → Ordner → agent.js → Datenfluss</p>
+
+<div id="kette"></div>
+
+<script type="module">
+  import { GANG } from "./GANG.js";
+
+  async function load() {
+    const sys = await GANG();
+
+    const div = document.getElementById("kette");
+
+    // ROOT
+    div.innerHTML += `
+      <div class="item">
+        ROOT: <span class="ok">${sys.root}</span>
+      </div>
+    `;
+
+    // Kette
+    sys.chain.forEach(item => {
+      const symbol = item.status === "OK" ? "⭕" : "❌";
+      const cls = item.status === "OK" ? "ok" : "err";
+
+      div.innerHTML += `
+        <div class="item ${cls}">
+          ${symbol} ${item.folder} → ${item.agent || "NO_AGENT"}
+        </div>
+      `;
+    });
+
+    // Fehler
+    if (sys.errors.length > 0) {
+      div.innerHTML += `
+        <h3>Fehler</h3>
+        <pre>${JSON.stringify(sys.errors, null, 2)}</pre>
+      `;
+    }
+  }
+
+  load();
+</script>
+
+</body>
+</html>
