@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>GANG.ORGA — iki1uc · Umgebung</title>
+
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+  .box { border:1px solid #0f0; padding:15px; margin-bottom:20px; }
+  h2 { margin-top:0; }
+  .state { color:#6cf; }
+</style>
+</head>
+
+<body>
+
+<h1>GANG.ORGA — iki1uc · Umgebung</h1>
+
+<div class="box">
+  <h2>GANG · Umgebung</h2>
+  <div>ROOT: <span id="root">–</span></div>
+  <div>IX: <span id="ix">–</span></div>
+  <div>XI: <span id="xi">–</span></div>
+  <div>Z: <span id="z">–</span></div>
+</div>
+
+<div class="box">
+  <h2>GANG · Bewegung</h2>
+  <div>MOVE: <span id="move">–</span></div>
+  <div>AXIOM3E: <span id="axiom">–</span></div>
+</div>
+
+<div class="box">
+  <h2>KIpi · Zustand</h2>
+  <div>Ursache: <span id="u">–</span></div>
+  <div>Wirkung: <span id="w">–</span></div>
+  <div>Ergebnis: <span id="e">–</span></div>
+</div>
+
+<div class="box">
+  <h2>Orbit / Pulse / RAW</h2>
+  <div>Orbit: <span id="orbit">–</span></div>
+  <div>Pulse: <span id="pulse">–</span></div>
+  <div>RAW: <span id="raw">–</span></div>
+</div>
+
+<script type="module">
+import { Axiom3E } from "./Axiom3E.link.js";
+
+// ------------------------------------------------------
+// GANG Umgebung
+// ------------------------------------------------------
+
+const GANG = {
+  ROOT: "GANG.root",
+  IX: "Formkörper",
+  XI: "Kernkörper",
+  Z: "Continuum",
+
+  MOVE: ["slide", "wette", "score"],
+  KIpi: ["U", "W", "E"],
+
+  ORBIT: "READY",
+  PULSE: "READY",
+  RAW: "READY"
+};
+
+let posMove = 0;
+let posKIpi = 0;
+let tick = 0;
+
+// ------------------------------------------------------
+// UPDATE LOOP
+// ------------------------------------------------------
+
+function update() {
+
+  // Bewegung rotieren
+  const mv = GANG.MOVE[posMove];
+  document.getElementById("move").innerText = mv;
+  posMove = (posMove + 1) % GANG.MOVE.length;
+
+  // KIpi rotieren
+  const kv = GANG.KIpi[posKIpi];
+  document.getElementById("u").innerText = kv === "U" ? "Ursache" : "–";
+  document.getElementById("w").innerText = kv === "W" ? "Wirkung" : "–";
+  document.getElementById("e").innerText = kv === "E" ? "Ergebnis" : "–";
+  posKIpi = (posKIpi + 1) % GANG.KIpi.length;
+
+  // Orbit / Pulse / RAW
+  tick++;
+  document.getElementById("orbit").innerText = tick % 2 === 0 ? "SYNC" : "DRIFT";
+  document.getElementById("pulse").innerText = tick % 3 === 0 ? "PULSE‑X" : "PULSE‑O";
+  document.getElementById("raw").innerText   = tick % 5 === 0 ? "RAW‑FLOW" : "RAW‑IDLE";
+
+  // Umgebung
+  document.getElementById("root").innerText = GANG.ROOT;
+  document.getElementById("ix").innerText   = GANG.IX;
+  document.getElementById("xi").innerText   = GANG.XI;
+  document.getElementById("z").innerText    = GANG.Z;
+
+  // Axiom3E anzeigen
+  document.getElementById("axiom").innerText = JSON.stringify(Axiom3E);
+}
+
+setInterval(update, 600);
+</script>
+
+</body>
+</html>
