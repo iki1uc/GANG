@@ -1,19 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
-    <title>GANG.root</title>
-    <style>
-        body{background:#000;color:#0f0;font-family:monospace;padding:20px;}
-    </style>
+<meta charset="UTF-8">
+<title>GANG.UNIVERSAL — iki1uc · Kontext-System</title>
+
+<style>
+  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+  .box { border:1px solid #0f0; padding:15px; margin-bottom:20px; }
+  h2 { margin-top:0; }
+  .state { color:#6cf; }
+</style>
 </head>
 
 <body>
-    <h1>GANG.root – Startpunkt</h1>
-    <pre id="out">Axiom3E geladen...</pre>
 
-    <script type="module">
-        import { Axiom3E } from "./Axiom3E.link.js";
-        out.textContent = JSON.stringify(Axiom3E, null, 2);
-    </script>
-</body>
-</html>
+<h1>GANG.UNIVERSAL — iki1uc · Kontext-System</h1>
+<p>Alle Räume · Alle Achsen · Alle Moves · Alle Axiome · Alle RAW‑Zustände</p>
+
+<!-- Umgebung -->
+<div class="box">
+  <h2>Umgebung · IX / XI / Z</h2>
+  <div>IX (Formkörper): <span id="ix">–</span></div>
+  <div>XI (Kernkörper): <span id="xi">–</span></div>
+  <div>Z (Continuum): <span id="z">–</span></div>
+</div>
+
+<!-- Axiom3E -->
+<div class="box">
+  <h2>Axiom3E · Kern</h2>
+  <pre id="axiom">Lädt…</pre>
+</div>
+
+<!-- KIpi -->
+<div class="box">
+  <h2>KIpi · Ursache → Wirkung → Ergebnis</h2>
+  <div>U: <span id="u">–</span></div>
+  <div>W: <span id="w">–</span></div>
+  <div>E: <span id="e">–</span></div>
+</div>
+
+<!-- Moves -->
+<div class="box">
+  <h2>Moves · slide / wette / score</h2>
+  <div>MOVE: <span id="move">–</span></div>
+</div>
+
+<!-- Rooms -->
+<div class="box">
+  <h2>Rooms · GANG / C / HESS / Q / Z</h2>
+  <div>GANG.room: <span id="gang-room">–</span></div>
+  <div>C.room: <span id="c-room">–</span></div>
+  <div>HESS.room: <span id="hess-room">–</span></div>
+  <div>Q.room: <span id="q-room">–</span></div>
+  <div>Z.room: <span id="z-room">–</span></div>
+</div>
+
+<!-- AIRchess -->
+<div class="box">
+  <h2>AIRchess · 6D / 9×9×12D</h2>
+  <div>AIRchess.6D: <span id="air6">–</span></div>
+  <div>AIRchess.9×9×12D: <span id="air9">–</span></div>
+</div>
+
+<!-- eco -->
+<div class="box">
+  <h2>eco · Balance / Capital / Model</h2>
+  <div>Balance: <span id="eco-balance">–</span></div>
+  <div>Capital: <span id="eco-capital">
