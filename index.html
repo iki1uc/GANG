@@ -1,20 +1,29 @@
 <!DOCTYPE html>
-<html lang="de">
+<html>
 <head>
 <meta charset="UTF-8">
-<title>GANG.SYSTEM.full — iki1uc</title>
-
+<title>GANG.STATE — iki1uc</title>
 <style>
   body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
-  .box { border:1px solid #0f0; padding:15px; margin-bottom:20px; }
-  h2 { margin-top:0; }
-  .ok { color:#0f0; }
-  .err { color:#f00; }
-  pre { color:#0f0; }
 </style>
 </head>
-
 <body>
+
+<h1>GANG.STATE — iki1uc</h1>
+<p>Technik‑Analyse · Erfüllung · Meer‑Flow</p>
+
+<pre id="out"></pre>
+
+<script type="module">
+  import { GANG_STATE } from "./GANG/GANG.state.core.js";
+
+  document.getElementById("out").innerText =
+    JSON.stringify(GANG_STATE, null, 2);
+</script>
+
+</body>
+</html>
+
 
 <h1>GANG.SYSTEM.full — iki1uc</h1>
 <p>ROOT · Ordner · agent.js · Räume · Moves · RAW · eco · AIR · Diagnose</p>
