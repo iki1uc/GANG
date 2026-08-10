@@ -17,7 +17,6 @@ export async function GANG() {
     status: "INIT"
   };
 
-  // ROOT laden
   try {
     const root = await import("./GANG.root.js");
     system.root = root.ROOT || "NO_ROOT";
@@ -25,7 +24,6 @@ export async function GANG() {
     system.errors.push("ROOT fehlt: " + err);
   }
 
-  // Ordner laden
   for (const folder of folders) {
     try {
       const mod = await import(`./${folder}/agent.js`);
