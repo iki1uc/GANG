@@ -20,11 +20,10 @@
 <div id="kette"></div>
 
 <script type="module">
-  import { GANG } from "./GANG.js";
+  import { GANG_SYSTEM } from "./GANG.js";
 
   async function load() {
-    const sys = await GANG();
-
+    const sys = await GANG_SYSTEM();
     const div = document.getElementById("kette");
 
     // ROOT
@@ -34,7 +33,7 @@
       </div>
     `;
 
-    // Kette
+    // ORDNER-KETTE
     sys.chain.forEach(item => {
       const symbol = item.status === "OK" ? "⭕" : "❌";
       const cls = item.status === "OK" ? "ok" : "err";
@@ -46,7 +45,15 @@
       `;
     });
 
-    // Fehler
+    // DATEIEN
+    div.innerHTML += `<h3>Dateien</h3>`;
+    sys.files.forEach(f => {
+      div.innerHTML += `
+        <div class="item ok">📄 ${f.file}</div>
+      `;
+    });
+
+    // FEHLER
     if (sys.errors.length > 0) {
       div.innerHTML += `
         <h3>Fehler</h3>
