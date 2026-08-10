@@ -2,68 +2,73 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>GANG.UNIVERSAL — iki1uc · Kontext-System</title>
+<title>GANG.SYSTEM.full — iki1uc</title>
 
 <style>
   body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
   .box { border:1px solid #0f0; padding:15px; margin-bottom:20px; }
   h2 { margin-top:0; }
-  .state { color:#6cf; }
+  .ok { color:#0f0; }
+  .err { color:#f00; }
+  pre { color:#0f0; }
 </style>
 </head>
 
 <body>
 
-<h1>GANG.UNIVERSAL — iki1uc · Kontext-System</h1>
-<p>Alle Räume · Alle Achsen · Alle Moves · Alle Axiome · Alle RAW‑Zustände</p>
+<h1>GANG.SYSTEM.full — iki1uc</h1>
+<p>ROOT · Ordner · agent.js · Räume · Moves · RAW · eco · AIR · Diagnose</p>
 
-<!-- Umgebung -->
-<div class="box">
-  <h2>Umgebung · IX / XI / Z</h2>
-  <div>IX (Formkörper): <span id="ix">–</span></div>
-  <div>XI (Kernkörper): <span id="xi">–</span></div>
-  <div>Z (Continuum): <span id="z">–</span></div>
-</div>
+<div id="root-box" class="box"></div>
+<div id="chain-box" class="box"></div>
+<div id="rooms-box" class="box"></div>
+<div id="moves-box" class="box"></div>
+<div id="raw-box" class="box"></div>
+<div id="orbit-box" class="box"></div>
+<div id="pulse-box" class="box"></div>
+<div id="axiom-box" class="box"></div>
+<div id="eco-box" class="box"></div>
+<div id="air-box" class="box"></div>
+<div id="errors-box" class="box"></div>
 
-<!-- Axiom3E -->
-<div class="box">
-  <h2>Axiom3E · Kern</h2>
-  <pre id="axiom">Lädt…</pre>
-</div>
+<script type="module">
+  import { GANG_SYSTEM_FULL } from "./GANG/GANG.SYSTEM.full.js";
 
-<!-- KIpi -->
-<div class="box">
-  <h2>KIpi · Ursache → Wirkung → Ergebnis</h2>
-  <div>U: <span id="u">–</span></div>
-  <div>W: <span id="w">–</span></div>
-  <div>E: <span id="e">–</span></div>
-</div>
+  async function load() {
+    const sys = await GANG_SYSTEM_FULL();
 
-<!-- Moves -->
-<div class="box">
-  <h2>Moves · slide / wette / score</h2>
-  <div>MOVE: <span id="move">–</span></div>
-</div>
+    // ROOT
+    document.getElementById("root-box").innerHTML =
+      `<h2>ROOT</h2><div class="ok">${sys.root}</div>`;
 
-<!-- Rooms -->
-<div class="box">
-  <h2>Rooms · GANG / C / HESS / Q / Z</h2>
-  <div>GANG.room: <span id="gang-room">–</span></div>
-  <div>C.room: <span id="c-room">–</span></div>
-  <div>HESS.room: <span id="hess-room">–</span></div>
-  <div>Q.room: <span id="q-room">–</span></div>
-  <div>Z.room: <span id="z-room">–</span></div>
-</div>
+    // ORDNER-KETTE
+    let chainHTML = "<h2>Ordner-Kette</h2>";
+    sys.chain.forEach(item => {
+      const symbol = item.status === "OK" ? "⭕" : "❌";
+      const cls = item.status === "OK" ? "ok" : "err";
+      chainHTML += `<div class="${cls}">${symbol} ${item.folder} → ${item.agent || "NO_AGENT"}</div>`;
+    });
+    document.getElementById("chain-box").innerHTML = chainHTML;
 
-<!-- AIRchess -->
-<div class="box">
-  <h2>AIRchess · 6D / 9×9×12D</h2>
-  <div>AIRchess.6D: <span id="air6">–</span></div>
-  <div>AIRchess.9×9×12D: <span id="air9">–</span></div>
-</div>
+    // ROOMS
+    let roomsHTML = "<h2>Rooms</h2>";
+    sys.rooms.forEach(r => roomsHTML += `<div class="ok">🏛️ ${r}</div>`);
+    document.getElementById("rooms-box").innerHTML = roomsHTML;
 
-<!-- eco -->
-<div class="box">
-  <h2>eco · Balance / Capital / Model</h2>
-  <div>Balance: <span id="eco-balance">–</span></div>
-  <div>Capital: <span id="eco-capital">
+    // MOVES
+    let movesHTML = "<h2>Moves</h2>";
+    sys.moves.forEach(m => movesHTML += `<div class="ok">➡️ ${m}</div>`);
+    document.getElementById("moves-box").innerHTML = movesHTML;
+
+    // RAW
+    let rawHTML = "<h2>RAW</h2>";
+    sys.raw.forEach(r => rawHTML += `<div class="ok">⚡ ${r}</div>`);
+    document.getElementById("raw-box").innerHTML = rawHTML;
+
+    // ORBIT
+    let orbitHTML = "<h2>Orbit</h2>";
+    sys.orbit.forEach(o => orbitHTML += `<div class="ok">🌀 ${o}</div>`);
+    document.getElementById("orbit-box").innerHTML = orbitHTML;
+
+    // PULSE
+    let pulseHTML = "<h2>Pulse</h2>";
