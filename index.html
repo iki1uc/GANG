@@ -3,501 +3,431 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🌀 243 · PQ‑ROOT · WHIRL · RESPO v2.43</title>
-
+<title>🌀 3IN · 3OUT · BRIDGE · RING</title>
 <style>
 * { box-sizing:border-box; margin:0; padding:0; }
 body {
-  background: #0a0a0f;
-  color: #c8d0d0;
-  font-family: 'Consolas', 'Courier New', monospace;
-  min-height: 100vh;
+  background: #0a0a10;
+  color: #d0d9e6;
+  font-family: 'Consolas', monospace;
+  padding: 20px;
   display: flex;
   justify-content: center;
-  align-items: center;
-  padding: 16px;
-  background: radial-gradient(ellipse at 50% 50%, #0a0a1a, #000000);
-  transition: background 0.8s ease;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, #0f1a22, #000000);
 }
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   width: 100%;
-  background: rgba(10,10,20,0.3);
-  border: 1px solid rgba(255,170,0,0.03);
-  border-radius: 20px;
+  background: rgba(10,14,20,0.6);
+  border-radius: 28px;
+  border: 1px solid rgba(100,200,255,0.04);
   padding: 24px;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 100px rgba(0,0,0,0.8);
+  backdrop-filter: blur(8px);
 }
-.header {
-  text-align: center;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255,255,255,0.02);
-  margin-bottom: 16px;
-}
-.header h1 {
-  font-size: 28px;
-  background: linear-gradient(90deg, #ffaa00, #ff66ff, #00ccff, #00ff88);
+h1 {
+  font-size: 24px;
+  font-weight: 300;
+  letter-spacing: 8px;
+  background: linear-gradient(90deg, #7fc9ff, #ffcc44, #ff66ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 4px;
-}
-.header .sub {
-  color: #445555;
-  font-size: 11px;
-  letter-spacing: 3px;
-}
-.header .sub .pq { color: #ffaa00; }
-.header .sub .whirl { color: #ff66ff; }
-
-.routing-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-@media (max-width:700px){ .routing-grid { grid-template-columns:1fr 1fr; } }
-@media (max-width:450px){ .routing-grid { grid-template-columns:1fr; } }
-
-.routing-card {
-  background: rgba(10,10,20,0.2);
-  border: 1px solid rgba(255,255,255,0.02);
-  border-radius: 10px;
-  padding: 10px 8px;
   text-align: center;
-  transition: all 0.3s;
-  cursor: pointer;
+  margin-bottom: 8px;
 }
-.routing-card:hover {
-  border-color: rgba(255,170,0,0.1);
-  transform: translateY(-2px);
-}
-.routing-card .icon { font-size: 24px; }
-.routing-card .name {
-  color: #aab;
+.sub {
+  text-align: center;
+  color: #3d5a70;
   font-size: 10px;
-  font-weight: bold;
+  letter-spacing: 4px;
+  margin-bottom: 20px;
+}
+
+/* BRIDGE-LAYOUT */
+.bridge {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 20px;
+  align-items: stretch;
+  margin: 16px 0;
+}
+@media (max-width:700px){ .bridge { grid-template-columns:1fr; } }
+
+.port {
+  background: rgba(16,24,32,0.4);
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid rgba(60,120,180,0.06);
+}
+.port h3 {
+  font-size: 11px;
+  color: #3d5a70;
+  letter-spacing: 3px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+.port .item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
   margin: 4px 0;
+  background: rgba(0,0,0,0.2);
+  border-radius: 8px;
+  border-left: 2px solid transparent;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.routing-card .value {
-  font-size: 16px;
-  font-weight: bold;
-  font-family: monospace;
+.port .item:hover { background: rgba(30,50,70,0.2); }
+.port .item .label { font-size: 13px; }
+.port .item .val { font-size: 11px; color: #6a8aa0; }
+.port.in .item { border-left-color: #7fc9ff; }
+.port.out .item { border-left-color: #ff66ff; }
+
+/* BRIDGE-CENTER */
+.bridge-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  gap: 8px;
+  min-width: 80px;
 }
-.routing-card .desc {
-  color: #445555;
-  font-size: 7px;
+.bridge-center .symbol {
+  font-size: 36px;
+  color: #ffcc44;
+  text-shadow: 0 0 30px rgba(255,204,68,0.1);
+}
+.bridge-center .info {
+  font-size: 8px;
+  color: #3d5a70;
+  text-align: center;
   letter-spacing: 1px;
 }
-.routing-card .status {
-  font-size: 7px;
-  margin-top: 2px;
-}
-.routing-card .status.on { color: #00ff88; }
-.routing-card .status.flow { color: #ffaa00; }
-.routing-card .status.whirl { color: #ff66ff; }
 
-.canvas-wrap {
-  position: relative;
-  width: 100%;
-  max-width: 700px;
-  margin: 0 auto;
-  aspect-ratio: 16/9;
-  background: rgba(0,0,0,0.4);
-  border-radius: 12px;
-  border: 1px solid rgba(255,170,0,0.02);
-  overflow: hidden;
+/* CONNECTIONS */
+.connections {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 6px;
+  margin: 12px 0;
 }
-#pqCanvas {
-  width: 100%;
-  height: 100%;
-  display: block;
+.connections .link {
+  text-align: center;
+  padding: 6px;
+  font-size: 9px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  color: #3d5a70;
+  cursor: pointer;
+  transition: 0.2s;
 }
+.connections .link.active {
+  color: #00ff88;
+  border: 1px solid rgba(0,255,136,0.1);
+}
+.connections .link:hover { background: rgba(30,50,70,0.2); }
 
 .controls {
   display: flex;
   gap: 6px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-top: 10px;
+  margin: 12px 0;
 }
 .controls button {
-  background: rgba(20,35,35,0.2);
-  color: #668888;
-  border: 1px solid rgba(255,255,255,0.02);
-  padding: 5px 16px;
+  background: rgba(20,35,45,0.3);
+  color: #8ab8e6;
+  border: 1px solid rgba(100,200,255,0.04);
+  padding: 6px 14px;
   border-radius: 18px;
-  cursor: pointer;
   font-family: inherit;
   font-size: 9px;
-  transition: all 0.3s;
+  cursor: pointer;
+  transition: 0.2s;
 }
-.controls button:hover { background: rgba(40,80,70,0.08); color: #aaeedd; }
-.controls button.active { background: rgba(40,80,70,0.06); color: #00ff88; }
-.controls button.pq { color: #ffaa00; border-color: rgba(255,170,0,0.05); }
-.controls button.whirl { color: #ff66ff; border-color: rgba(255,102,255,0.05); }
+.controls button:hover {
+  background: rgba(40,80,100,0.2);
+  color: #b8e2ff;
+}
+.controls button.active { background: rgba(40,80,100,0.1); color: #00ff88; }
 
-.status-bar {
-  display: flex;
-  justify-content: space-between;
-  padding: 4px 10px;
-  margin-top: 8px;
-  background: rgba(0,0,0,0.2);
-  border-radius: 6px;
-  font-size: 7px;
-  color: #445555;
-  border: 1px solid rgba(255,255,255,0.01);
+.log {
+  background: rgba(0,0,0,0.3);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 8px;
+  color: #3d5a70;
+  max-height: 140px;
+  overflow-y: auto;
+  border: 1px solid rgba(100,200,255,0.02);
+  margin-top: 12px;
+  font-family: 'Consolas', monospace;
+  line-height: 1.6;
 }
-.status-bar .pq { color: #ffaa00; }
-.status-bar .whirl { color: #ff66ff; }
+.log .hl { color: #7fc9ff; }
+.log .ok { color: #00ff88; }
+.log .flow { color: #ffaa00; }
+.log .whirl { color: #ff66ff; }
 
 .footer {
   text-align: center;
-  margin-top: 8px;
-  color: #222;
   font-size: 7px;
+  color: #1f2a36;
+  margin-top: 12px;
   letter-spacing: 2px;
 }
-.footer span { color: #ffaa00; }
 </style>
 </head>
 <body>
 
 <div class="container">
 
-<div class="header">
-  <h1>🌀 243 · PQ‑ROOT</h1>
-  <div class="sub"><span class="pq">PQ‑VECTOR</span> · <span class="whirl">WHIRL</span> · RESPO v2.43</div>
+<h1>🌀 3IN · 3OUT · BRIDGE</h1>
+<div class="sub">EINGANG · ÜBERGABE · AUSGANG · RING‑CORE</div>
+
+<!-- BRIDGE -->
+<div class="bridge">
+  <!-- EINGÄNGE (IN) -->
+  <div class="port in" id="inPort">
+    <h3>⬇ EINGANG</h3>
+    <div class="item" data-id="in1">
+      <span class="label">🔵 KI‑1</span>
+      <span class="val">Wert: <span id="in1val">1.00</span></span>
+    </div>
+    <div class="item" data-id="in2">
+      <span class="label">🟡 USER</span>
+      <span class="val">Wert: <span id="in2val">1.00</span></span>
+    </div>
+    <div class="item" data-id="in3">
+      <span class="label">🟣 KI‑2</span>
+      <span class="val">Wert: <span id="in3val">1.00</span></span>
+    </div>
+  </div>
+
+  <!-- BRIDGE-CENTER (ÜBERGABE) -->
+  <div class="bridge-center">
+    <div class="symbol">⟷</div>
+    <div class="info">BRIDGE<br>TRANSFER</div>
+    <div class="info" style="font-size:10px; color:#ffcc44;" id="bridgeStatus">● bereit</div>
+  </div>
+
+  <!-- AUSGÄNGE (OUT) -->
+  <div class="port out" id="outPort">
+    <h3>⬆ AUSGANG</h3>
+    <div class="item" data-id="out1">
+      <span class="label">🟢 Wasser</span>
+      <span class="val">Wert: <span id="out1val">0.00</span></span>
+    </div>
+    <div class="item" data-id="out2">
+      <span class="label">🔴 Eis</span>
+      <span class="val">Wert: <span id="out2val">0.00</span></span>
+    </div>
+    <div class="item" data-id="out3">
+      <span class="label">🟠 Dampf</span>
+      <span class="val">Wert: <span id="out3val">0.00</span></span>
+    </div>
+  </div>
 </div>
 
-<div class="routing-grid" id="routingGrid">
-  <div class="routing-card" data-range="palaise">
-    <div class="icon">📊</div>
-    <div class="name">PALAISE_RESPO</div>
-    <div class="value" style="color:#00ff88;">0-99</div>
-    <div class="desc">Basis-Response</div>
-    <div class="status on">● aktiv</div>
-  </div>
-  <div class="routing-card" data-range="arg">
-    <div class="icon">🔍</div>
-    <div class="name">RESPO_ARG_SCAN</div>
-    <div class="value" style="color:#ffaa00;">100-199</div>
-    <div class="desc">Argument-Scan</div>
-    <div class="status flow">● flow</div>
-  </div>
-  <div class="routing-card" data-range="whirl">
-    <div class="icon">🌀</div>
-    <div class="name">RESPO_WHIRL</div>
-    <div class="value" style="color:#ff66ff;">200-299</div>
-    <div class="desc">WHIRL-Response</div>
-    <div class="status whirl">● whirl</div>
-  </div>
-  <div class="routing-card" data-range="hub">
-    <div class="icon">🌐</div>
-    <div class="name">NC_HUB_ALL</div>
-    <div class="value" style="color:#00ccff;">≥300</div>
-    <div class="desc">Vollintegration</div>
-    <div class="status on">● aktiv</div>
-  </div>
+<!-- VERBINDUNGEN (3×3 MATRIX) -->
+<div class="connections" id="connections">
+  <div class="link" data-from="in1" data-to="out1">KI‑1 → Wasser</div>
+  <div class="link" data-from="in1" data-to="out2">KI‑1 → Eis</div>
+  <div class="link" data-from="in1" data-to="out3">KI‑1 → Dampf</div>
+  <div class="link" data-from="in2" data-to="out1">USER → Wasser</div>
+  <div class="link" data-from="in2" data-to="out2">USER → Eis</div>
+  <div class="link" data-from="in2" data-to="out3">USER → Dampf</div>
+  <div class="link" data-from="in3" data-to="out1">KI‑2 → Wasser</div>
+  <div class="link" data-from="in3" data-to="out2">KI‑2 → Eis</div>
+  <div class="link" data-from="in3" data-to="out3">KI‑2 → Dampf</div>
 </div>
 
-<div class="canvas-wrap">
-  <canvas id="pqCanvas"></canvas>
-</div>
-
+<!-- CONTROLS -->
 <div class="controls">
-  <button class="active pq" id="btnStart">▶ START</button>
-  <button class="pq" id="btnPQ">🌀 PQ</button>
-  <button class="whirl" id="btnWhirl">🌀 WHIRL</button>
-  <button id="btnRespo">🔥 RESPO</button>
-  <button id="btnProof">🔮 PROOF</button>
-  <button id="btnReset">⟲ RESET</button>
+  <button onclick="transferAll()">⟷ TRANSFER ALL</button>
+  <button onclick="randomize()">🎲 RANDOMIZE</button>
+  <button onclick="stepTransfer()">⏭ STEP</button>
+  <button onclick="resetBridge()">⟲ RESET</button>
 </div>
 
-<div class="status-bar">
-  <span class="pq">🌀 PQ: <span id="pqStatus">aktiv</span></span>
-  <span class="whirl">🌀 WHIRL: <span id="whirlStatus">CORE</span></span>
-  <span>⏱️ <span id="timeStatus">00:00</span></span>
-</div>
+<!-- LOG -->
+<div class="log" id="log">[🌀] 3IN·3OUT BRIDGE geladen · bereit</div>
 
-<div class="footer">
-  <span>🌀</span> 243 · PQ‑ROOT · WHIRL · RESPO v2.43 · <span>wieimmer4u</span>
-</div>
+<div class="footer">🌀 3IN · 3OUT · BRIDGE · RING‑CORE · wieimmer4u</div>
 
 </div>
 
 <script>
 // ============================================================
-// 243 · PQ‑ROOT · WHIRL · RESPO v2.43
+// 3IN · 3OUT · BRIDGE · RING‑CORE
 // ============================================================
 
-// ===== CANVAS =====
-const canvas = document.getElementById('pqCanvas');
-const ctx = canvas.getContext('2d');
-let running = true;
-let time = 0;
-let pqValue = 0;
-let whirlMode = 'CORE';
-let respoState = 'SYNTHESIS';
-let routing = 'palaise';
-
-function resizeCanvas() {
-  const rect = canvas.parentElement.getBoundingClientRect();
-  canvas.width = rect.width || 700;
-  canvas.height = rect.height || (rect.width * 9/16) || 390;
-}
-window.addEventListener('resize', resizeCanvas);
-
-// ===== ROUTING =====
-const ROUTES = {
-  palaise: { name: 'PALAISE_RESPO', range: '0-99', color: '#00ff88', icon: '📊' },
-  arg: { name: 'RESPO_ARG_SCAN', range: '100-199', color: '#ffaa00', icon: '🔍' },
-  whirl: { name: 'RESPO_WHIRL', range: '200-299', color: '#ff66ff', icon: '🌀' },
-  hub: { name: 'NC_HUB_ALL', range: '≥300', color: '#00ccff', icon: '🌐' }
+// ---- STATE ----
+const state = {
+  in: {
+    in1: { label: 'KI‑1', value: 1.00, active: true },
+    in2: { label: 'USER', value: 1.00, active: true },
+    in3: { label: 'KI‑2', value: 1.00, active: true }
+  },
+  out: {
+    out1: { label: 'Wasser', value: 0.00, active: false },
+    out2: { label: 'Eis', value: 0.00, active: false },
+    out3: { label: 'Dampf', value: 0.00, active: false }
+  },
+  links: {
+    in1_out1: false,
+    in1_out2: false,
+    in1_out3: false,
+    in2_out1: false,
+    in2_out2: false,
+    in2_out3: false,
+    in3_out1: false,
+    in3_out2: false,
+    in3_out3: false
+  }
 };
 
-function getRoute(value) {
-  if (value < 100) return 'palaise';
-  if (value < 200) return 'arg';
-  if (value < 300) return 'whirl';
-  return 'hub';
-}
+// ---- RENDER UI ----
+function updateUI() {
+  // Eingänge
+  document.getElementById('in1val').textContent = state.in.in1.value.toFixed(2);
+  document.getElementById('in2val').textContent = state.in.in2.value.toFixed(2);
+  document.getElementById('in3val').textContent = state.in.in3.value.toFixed(2);
 
-// ===== WHIRL MODES =====
-const WHIRL_MODES = ['CORE', 'SYS', 'PQ', 'HYPER'];
-let whirlIndex = 0;
+  // Ausgänge
+  document.getElementById('out1val').textContent = state.out.out1.value.toFixed(2);
+  document.getElementById('out2val').textContent = state.out.out2.value.toFixed(2);
+  document.getElementById('out3val').textContent = state.out.out3.value.toFixed(2);
 
-function nextWhirl() {
-  whirlIndex = (whirlIndex + 1) % WHIRL_MODES.length;
-  whirlMode = WHIRL_MODES[whirlIndex];
-  document.getElementById('whirlStatus').textContent = whirlMode;
-  console.log(`🌀 WHIRL: ${whirlMode}`);
-}
-
-// ===== RESPO STATES =====
-const RESPO_STATES = ['SYNTHESIS', 'LINEAR', 'ORTHOGONAL', 'INFINITY', 'AURA'];
-let respoIndex = 0;
-
-function nextRespo() {
-  respoState = RESPO_STATES[respoIndex % RESPO_STATES.length];
-  respoIndex++;
-  console.log(`🔥 RESPO: ${respoState}`);
-}
-
-// ===== UPDATE =====
-function updatePQ() {
-  // PQ-Wert bewegt sich durch alle Bereiche
-  pqValue = (pqValue + 0.7) % 360;
-
-  // Routing bestimmen
-  const newRoute = getRoute(pqValue);
-  if (newRoute !== routing) {
-    routing = newRoute;
-    document.querySelectorAll('.routing-card').forEach(card => {
-      const range = card.dataset.range;
-      card.style.borderColor = range === routing ? ROUTES[routing].color + '44' : '';
-      card.style.background = range === routing ? 'rgba(255,170,0,0.03)' : '';
-    });
-  }
-
-  // DOM
-  document.getElementById('pqStatus').textContent = `${Math.round(pqValue)} · ${ROUTES[routing].name}`;
-  document.getElementById('pqStatus').style.color = ROUTES[routing].color;
-}
-
-// ===== RENDER =====
-function render() {
-  const w = canvas.width, h = canvas.height;
-  const cx = w/2, cy = h/2;
-  const maxDim = Math.min(w, h);
-
-  ctx.clearRect(0, 0, w, h);
-
-  // Hintergrund
-  const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, maxDim * 0.6);
-  grad.addColorStop(0, '#0a0a1a');
-  grad.addColorStop(0.5, '#050510');
-  grad.addColorStop(1, '#000000');
-  ctx.fillStyle = grad;
-  ctx.fillRect(0, 0, w, h);
-
-  // Routing-Ringe
-  const routeColors = {
-    palaise: '#00ff88',
-    arg: '#ffaa00',
-    whirl: '#ff66ff',
-    hub: '#00ccff'
-  };
-
-  const routeRanges = {
-    palaise: 0.1,
-    arg: 0.3,
-    whirl: 0.5,
-    hub: 0.7
-  };
-
-  for (const [key, range] of Object.entries(routeRanges)) {
-    const r = maxDim * (0.1 + range * 0.15);
-    const color = routeColors[key];
-    const isActive = routing === key;
-    ctx.shadowBlur = isActive ? 20 : 0;
-    ctx.shadowColor = isActive ? color + '44' : 'transparent';
-    ctx.strokeStyle = isActive ? color + '44' : color + '11';
-    ctx.lineWidth = isActive ? 2 : 0.5;
-    ctx.beginPath();
-    ctx.arc(cx, cy, r, 0, Math.PI * 2);
-    ctx.stroke();
-  }
-
-  // PQ-Punkt
-  const angle = pqValue / 360 * Math.PI * 2;
-  const dist = maxDim * (0.1 + (pqValue / 360) * 0.25);
-  const x = cx + Math.cos(angle) * dist;
-  const y = cy + Math.sin(angle) * dist;
-
-  const routeColor = routeColors[routing] || '#ffaa00';
-  ctx.shadowColor = routeColor + '66';
-  ctx.shadowBlur = 30;
-  ctx.fillStyle = routeColor + '88';
-  ctx.beginPath();
-  ctx.arc(x, y, 5 + (pqValue / 360) * 4, 0, Math.PI * 2);
-  ctx.fill();
-
-  // WHIRL-Modus
-  ctx.shadowBlur = 0;
-  ctx.fillStyle = '#ff66ff44';
-  ctx.font = `${maxDim * 0.02}px monospace`;
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'bottom';
-  ctx.fillText(`🌀 WHIRL · ${whirlMode}`, cx, h - 16);
-
-  // Routing-Info
-  ctx.fillStyle = '#445555';
-  ctx.font = `${maxDim * 0.015}px monospace`;
-  ctx.textBaseline = 'top';
-  ctx.fillText(`📍 ${ROUTES[routing].name} · ${Math.round(pqValue)}`, cx, 16);
-
-  // RESPO
-  ctx.fillStyle = '#ff66ff44';
-  ctx.font = `${maxDim * 0.015}px monospace`;
-  ctx.textBaseline = 'top';
-  ctx.textAlign = 'right';
-  ctx.fillText(`🔥 ${respoState}`, w - 16, 16);
-
-  // 243
-  ctx.fillStyle = '#ffaa0044';
-  ctx.font = `${maxDim * 0.015}px monospace`;
-  ctx.textAlign = 'left';
-  ctx.textBaseline = 'bottom';
-  ctx.fillText('🌀 243 · PQ-ROOT', 16, h - 16);
-
-  // Zeit
-  const seconds = Math.floor(time / 1000);
-  const minutes = Math.floor(seconds / 60);
-  document.getElementById('timeStatus').textContent =
-    `${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
-}
-
-// ===== UPDATE =====
-function update() {
-  if (!running) return;
-  time += 16;
-  updatePQ();
-  render();
-  requestAnimationFrame(update);
-}
-
-// ===== TOGGLES =====
-function triggerPQ() {
-  document.getElementById('btnPQ').classList.toggle('active');
-  console.log('🌀 PQ getriggert');
-}
-
-function triggerWhirl() {
-  nextWhirl();
-  document.getElementById('btnWhirl').classList.toggle('active');
-}
-
-// ===== PROOF =====
-function showProof() {
-  const proof = document.createElement('div');
-  proof.style.cssText = `
-    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
-    display: flex; justify-content: center; align-items: center;
-    z-index: 9999; backdrop-filter: blur(20px);
-    font-family: 'Consolas', monospace;
-  `;
-  proof.innerHTML = `
-    <div style="text-align:center; padding:40px; border:1px solid rgba(255,170,0,0.1); border-radius:20px; background:rgba(10,10,20,0.6); max-width:450px;">
-      <div style="font-size:48px; color:#ffaa00;">🌀</div>
-      <div style="color:#ffaa00; font-size:20px; margin:12px 0; letter-spacing:4px;">243 · PQ‑ROOT</div>
-      <div style="color:#88ddbb; font-size:13px; line-height:1.8;">
-        📍 ROUTE: ${ROUTES[routing].name} (${Math.round(pqValue)})<br>
-        🌀 WHIRL: ${whirlMode}<br>
-        🔥 RESPO: ${respoState}<br>
-        📊 PALAISE: 0-99 · 🔍 ARG: 100-199<br>
-        🌀 WHIRL: 200-299 · 🌐 HUB: ≥300
-      </div>
-      <button onclick="this.parentElement.parentElement.remove()" style="
-        margin-top:14px; background:rgba(20,35,35,0.2); color:#668888;
-        border:1px solid rgba(255,255,255,0.02); padding:6px 20px;
-        border-radius:18px; cursor:pointer; font-family:inherit; font-size:9px;
-      ">⏎ SCHLIESSEN</button>
-    </div>
-  `;
-  document.body.appendChild(proof);
-}
-
-// ===== RESET =====
-function resetAll() {
-  pqValue = 0;
-  routing = 'palaise';
-  whirlMode = 'CORE';
-  whirlIndex = 0;
-  respoState = 'SYNTHESIS';
-  respoIndex = 0;
-  document.getElementById('btnStart').classList.remove('active');
-  document.getElementById('pqStatus').textContent = 'reset';
-  document.getElementById('whirlStatus').textContent = 'CORE';
-  document.querySelectorAll('.routing-card').forEach(card => {
-    card.style.borderColor = '';
-    card.style.background = '';
+  // Links
+  document.querySelectorAll('.link').forEach(el => {
+    const from = el.dataset.from;
+    const to = el.dataset.to;
+    const key = `${from}_${to}`;
+    if (state.links[key]) {
+      el.classList.add('active');
+      el.textContent = el.textContent.replace('→', '↔') + ' ●';
+    } else {
+      el.classList.remove('active');
+      el.textContent = el.textContent.replace('↔', '→').replace(' ●', '');
+    }
   });
+
+  // Bridge-Status
+  const activeLinks = Object.values(state.links).filter(v => v).length;
+  document.getElementById('bridgeStatus').textContent = activeLinks > 0 ? `● ${activeLinks} Verbindungen aktiv` : '○ bereit';
 }
 
-// ===== CONTROLS =====
-document.getElementById('btnStart').addEventListener('click', function() {
-  running = !running;
-  this.classList.toggle('active');
-  this.textContent = running ? '▶ START' : '⏸ PAUSE';
-  document.getElementById('pqStatus').textContent = running ? 'aktiv' : 'pausiert';
-  if (running) update();
+// ---- TOGGLE LINK ----
+function toggleLink(from, to) {
+  const key = `${from}_${to}`;
+  state.links[key] = !state.links[key];
+  const inVal = state.in[from].value;
+  const outKey = to;
+  if (state.links[key]) {
+    state.out[outKey].value = inVal;
+    state.out[outKey].active = true;
+    log(`🔗 Verbindung: ${state.in[from].label} → ${state.out[outKey].label} (${inVal.toFixed(2)})`);
+  } else {
+    state.out[outKey].value = 0;
+    state.out[outKey].active = false;
+    log(`⏸ Trennung: ${state.in[from].label} → ${state.out[outKey].label}`);
+  }
+  updateUI();
+}
+
+// ---- TRANSFER ALL ----
+function transferAll() {
+  let count = 0;
+  Object.keys(state.links).forEach(key => {
+    const [from, to] = key.split('_');
+    if (state.links[key]) {
+      const inVal = state.in[from].value;
+      state.out[to].value = inVal;
+      state.out[to].active = true;
+      count++;
+    }
+  });
+  log(`⟷ TRANSFER ALL: ${count} Verbindungen aktualisiert`);
+  updateUI();
+}
+
+// ---- RANDOMIZE ----
+function randomize() {
+  Object.keys(state.in).forEach(key => {
+    state.in[key].value = 0.5 + Math.random() * 2.0;
+  });
+  // Aktive Links übertragen
+  Object.keys(state.links).forEach(key => {
+    if (state.links[key]) {
+      const [from, to] = key.split('_');
+      state.out[to].value = state.in[from].value;
+      state.out[to].active = true;
+    }
+  });
+  log('🎲 RANDOMIZE: Neue Werte gesetzt');
+  updateUI();
+}
+
+// ---- STEP ----
+function stepTransfer() {
+  // Schrittweise Werte ändern
+  Object.keys(state.in).forEach(key => {
+    state.in[key].value += (Math.random() - 0.5) * 0.2;
+    state.in[key].value = Math.max(0.1, Math.min(3.0, state.in[key].value));
+  });
+  transferAll();
+  log('⏭ STEP: Werte leicht verändert');
+}
+
+// ---- RESET ----
+function resetBridge() {
+  Object.keys(state.in).forEach(key => {
+    state.in[key].value = 1.00;
+    state.in[key].active = true;
+  });
+  Object.keys(state.out).forEach(key => {
+    state.out[key].value = 0.00;
+    state.out[key].active = false;
+  });
+  Object.keys(state.links).forEach(key => {
+    state.links[key] = false;
+  });
+  log('⟲ RESET: Alle Verbindungen und Werte zurückgesetzt');
+  updateUI();
+}
+
+// ---- LOG ----
+function log(msg) {
+  const el = document.getElementById('log');
+  const time = new Date().toLocaleTimeString();
+  el.innerHTML += `<div>[${time}] ${msg}</div>`;
+  el.scrollTop = el.scrollHeight;
+  if (el.children.length > 50) el.removeChild(el.firstChild);
+}
+
+// ---- EVENT BINDING ----
+document.querySelectorAll('.link').forEach(el => {
+  el.addEventListener('click', () => {
+    toggleLink(el.dataset.from, el.dataset.to);
+  });
 });
 
-document.getElementById('btnPQ').addEventListener('click', triggerPQ);
-document.getElementById('btnWhirl').addEventListener('click', triggerWhirl);
-document.getElementById('btnRespo').addEventListener('click', nextRespo);
-document.getElementById('btnProof').addEventListener('click', showProof);
-document.getElementById('btnReset').addEventListener('click', resetAll);
-
-// ===== TASTATUR =====
+// ---- TASTATUR ----
 document.addEventListener('keydown', (e) => {
-  if (e.key === ' ') { e.preventDefault(); document.getElementById('btnStart').click(); }
-  if (e.key === 'p' || e.key === 'P') document.getElementById('btnPQ').click();
-  if (e.key === 'w' || e.key === 'W') document.getElementById('btnWhirl').click();
-  if (e.key === 'r' || e.key === 'R') document.getElementById('btnRespo').click();
-  if (e.key === 'x' || e.key === 'X') document.getElementById('btnProof').click();
-  if (e.key === 'z' || e.key === 'Z') document.getElementById('btnReset').click();
+  if (e.key === 't' || e.key === 'T') transferAll();
+  if (e.key === 'r' || e.key === 'R') randomize();
+  if (e.key === 's' || e.key === 'S') stepTransfer();
+  if (e.key === 'x' || e.key === 'X') resetBridge();
 });
 
-// ===== INIT =====
-resizeCanvas();
-setTimeout(resizeCanvas, 200);
-update();
-
-console.log('🌀 243 · PQ‑ROOT · WHIRL · RESPO v2.43');
-console.log('📊 PALAISE: 0-99 · 🔍 ARG: 100-199 · 🌀 WHIRL: 200-299 · 🌐 HUB: ≥300');
-console.log('⌨️  Leertaste=Start  p=PQ  w=WHIRL  r=RESPO  x=PROOF  z=Reset');
+// ---- INIT ----
+updateUI();
+log('🌀 3IN·3OUT BRIDGE · bereit');
+log('⌨️ t=TRANSFER  r=RANDOMIZE  s=STEP  x=RESET');
+log('💡 Klick auf Verbindungen zum Toggeln');
 </script>
 
 </body>
