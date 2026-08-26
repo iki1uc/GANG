@@ -1,83 +1,504 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
 <meta charset="UTF-8">
-<title>GANG.STATE — iki1uc</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🌀 243 · PQ‑ROOT · WHIRL · RESPO v2.43</title>
+
 <style>
-  body { background:#000; color:#0f0; font-family:Consolas; padding:20px; }
+* { box-sizing:border-box; margin:0; padding:0; }
+body {
+  background: #0a0a0f;
+  color: #c8d0d0;
+  font-family: 'Consolas', 'Courier New', monospace;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  background: radial-gradient(ellipse at 50% 50%, #0a0a1a, #000000);
+  transition: background 0.8s ease;
+}
+.container {
+  max-width: 1100px;
+  width: 100%;
+  background: rgba(10,10,20,0.3);
+  border: 1px solid rgba(255,170,0,0.03);
+  border-radius: 20px;
+  padding: 24px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 100px rgba(0,0,0,0.8);
+}
+.header {
+  text-align: center;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.02);
+  margin-bottom: 16px;
+}
+.header h1 {
+  font-size: 28px;
+  background: linear-gradient(90deg, #ffaa00, #ff66ff, #00ccff, #00ff88);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 4px;
+}
+.header .sub {
+  color: #445555;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+.header .sub .pq { color: #ffaa00; }
+.header .sub .whirl { color: #ff66ff; }
+
+.routing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+@media (max-width:700px){ .routing-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:450px){ .routing-grid { grid-template-columns:1fr; } }
+
+.routing-card {
+  background: rgba(10,10,20,0.2);
+  border: 1px solid rgba(255,255,255,0.02);
+  border-radius: 10px;
+  padding: 10px 8px;
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+.routing-card:hover {
+  border-color: rgba(255,170,0,0.1);
+  transform: translateY(-2px);
+}
+.routing-card .icon { font-size: 24px; }
+.routing-card .name {
+  color: #aab;
+  font-size: 10px;
+  font-weight: bold;
+  margin: 4px 0;
+}
+.routing-card .value {
+  font-size: 16px;
+  font-weight: bold;
+  font-family: monospace;
+}
+.routing-card .desc {
+  color: #445555;
+  font-size: 7px;
+  letter-spacing: 1px;
+}
+.routing-card .status {
+  font-size: 7px;
+  margin-top: 2px;
+}
+.routing-card .status.on { color: #00ff88; }
+.routing-card .status.flow { color: #ffaa00; }
+.routing-card .status.whirl { color: #ff66ff; }
+
+.canvas-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  aspect-ratio: 16/9;
+  background: rgba(0,0,0,0.4);
+  border-radius: 12px;
+  border: 1px solid rgba(255,170,0,0.02);
+  overflow: hidden;
+}
+#pqCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.controls {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 10px;
+}
+.controls button {
+  background: rgba(20,35,35,0.2);
+  color: #668888;
+  border: 1px solid rgba(255,255,255,0.02);
+  padding: 5px 16px;
+  border-radius: 18px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 9px;
+  transition: all 0.3s;
+}
+.controls button:hover { background: rgba(40,80,70,0.08); color: #aaeedd; }
+.controls button.active { background: rgba(40,80,70,0.06); color: #00ff88; }
+.controls button.pq { color: #ffaa00; border-color: rgba(255,170,0,0.05); }
+.controls button.whirl { color: #ff66ff; border-color: rgba(255,102,255,0.05); }
+
+.status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 10px;
+  margin-top: 8px;
+  background: rgba(0,0,0,0.2);
+  border-radius: 6px;
+  font-size: 7px;
+  color: #445555;
+  border: 1px solid rgba(255,255,255,0.01);
+}
+.status-bar .pq { color: #ffaa00; }
+.status-bar .whirl { color: #ff66ff; }
+
+.footer {
+  text-align: center;
+  margin-top: 8px;
+  color: #222;
+  font-size: 7px;
+  letter-spacing: 2px;
+}
+.footer span { color: #ffaa00; }
 </style>
 </head>
 <body>
 
-<h1>GANG.STATE — iki1uc</h1>
-<p>Technik‑Analyse · Erfüllung · Meer‑Flow</p>
+<div class="container">
 
-<pre id="out"></pre>
+<div class="header">
+  <h1>🌀 243 · PQ‑ROOT</h1>
+  <div class="sub"><span class="pq">PQ‑VECTOR</span> · <span class="whirl">WHIRL</span> · RESPO v2.43</div>
+</div>
 
-<script type="module">
-  import { GANG_STATE } from "./GANG/GANG.state.core.js";
+<div class="routing-grid" id="routingGrid">
+  <div class="routing-card" data-range="palaise">
+    <div class="icon">📊</div>
+    <div class="name">PALAISE_RESPO</div>
+    <div class="value" style="color:#00ff88;">0-99</div>
+    <div class="desc">Basis-Response</div>
+    <div class="status on">● aktiv</div>
+  </div>
+  <div class="routing-card" data-range="arg">
+    <div class="icon">🔍</div>
+    <div class="name">RESPO_ARG_SCAN</div>
+    <div class="value" style="color:#ffaa00;">100-199</div>
+    <div class="desc">Argument-Scan</div>
+    <div class="status flow">● flow</div>
+  </div>
+  <div class="routing-card" data-range="whirl">
+    <div class="icon">🌀</div>
+    <div class="name">RESPO_WHIRL</div>
+    <div class="value" style="color:#ff66ff;">200-299</div>
+    <div class="desc">WHIRL-Response</div>
+    <div class="status whirl">● whirl</div>
+  </div>
+  <div class="routing-card" data-range="hub">
+    <div class="icon">🌐</div>
+    <div class="name">NC_HUB_ALL</div>
+    <div class="value" style="color:#00ccff;">≥300</div>
+    <div class="desc">Vollintegration</div>
+    <div class="status on">● aktiv</div>
+  </div>
+</div>
 
-  document.getElementById("out").innerText =
-    JSON.stringify(GANG_STATE, null, 2);
+<div class="canvas-wrap">
+  <canvas id="pqCanvas"></canvas>
+</div>
+
+<div class="controls">
+  <button class="active pq" id="btnStart">▶ START</button>
+  <button class="pq" id="btnPQ">🌀 PQ</button>
+  <button class="whirl" id="btnWhirl">🌀 WHIRL</button>
+  <button id="btnRespo">🔥 RESPO</button>
+  <button id="btnProof">🔮 PROOF</button>
+  <button id="btnReset">⟲ RESET</button>
+</div>
+
+<div class="status-bar">
+  <span class="pq">🌀 PQ: <span id="pqStatus">aktiv</span></span>
+  <span class="whirl">🌀 WHIRL: <span id="whirlStatus">CORE</span></span>
+  <span>⏱️ <span id="timeStatus">00:00</span></span>
+</div>
+
+<div class="footer">
+  <span>🌀</span> 243 · PQ‑ROOT · WHIRL · RESPO v2.43 · <span>wieimmer4u</span>
+</div>
+
+</div>
+
+<script>
+// ============================================================
+// 243 · PQ‑ROOT · WHIRL · RESPO v2.43
+// ============================================================
+
+// ===== CANVAS =====
+const canvas = document.getElementById('pqCanvas');
+const ctx = canvas.getContext('2d');
+let running = true;
+let time = 0;
+let pqValue = 0;
+let whirlMode = 'CORE';
+let respoState = 'SYNTHESIS';
+let routing = 'palaise';
+
+function resizeCanvas() {
+  const rect = canvas.parentElement.getBoundingClientRect();
+  canvas.width = rect.width || 700;
+  canvas.height = rect.height || (rect.width * 9/16) || 390;
+}
+window.addEventListener('resize', resizeCanvas);
+
+// ===== ROUTING =====
+const ROUTES = {
+  palaise: { name: 'PALAISE_RESPO', range: '0-99', color: '#00ff88', icon: '📊' },
+  arg: { name: 'RESPO_ARG_SCAN', range: '100-199', color: '#ffaa00', icon: '🔍' },
+  whirl: { name: 'RESPO_WHIRL', range: '200-299', color: '#ff66ff', icon: '🌀' },
+  hub: { name: 'NC_HUB_ALL', range: '≥300', color: '#00ccff', icon: '🌐' }
+};
+
+function getRoute(value) {
+  if (value < 100) return 'palaise';
+  if (value < 200) return 'arg';
+  if (value < 300) return 'whirl';
+  return 'hub';
+}
+
+// ===== WHIRL MODES =====
+const WHIRL_MODES = ['CORE', 'SYS', 'PQ', 'HYPER'];
+let whirlIndex = 0;
+
+function nextWhirl() {
+  whirlIndex = (whirlIndex + 1) % WHIRL_MODES.length;
+  whirlMode = WHIRL_MODES[whirlIndex];
+  document.getElementById('whirlStatus').textContent = whirlMode;
+  console.log(`🌀 WHIRL: ${whirlMode}`);
+}
+
+// ===== RESPO STATES =====
+const RESPO_STATES = ['SYNTHESIS', 'LINEAR', 'ORTHOGONAL', 'INFINITY', 'AURA'];
+let respoIndex = 0;
+
+function nextRespo() {
+  respoState = RESPO_STATES[respoIndex % RESPO_STATES.length];
+  respoIndex++;
+  console.log(`🔥 RESPO: ${respoState}`);
+}
+
+// ===== UPDATE =====
+function updatePQ() {
+  // PQ-Wert bewegt sich durch alle Bereiche
+  pqValue = (pqValue + 0.7) % 360;
+
+  // Routing bestimmen
+  const newRoute = getRoute(pqValue);
+  if (newRoute !== routing) {
+    routing = newRoute;
+    document.querySelectorAll('.routing-card').forEach(card => {
+      const range = card.dataset.range;
+      card.style.borderColor = range === routing ? ROUTES[routing].color + '44' : '';
+      card.style.background = range === routing ? 'rgba(255,170,0,0.03)' : '';
+    });
+  }
+
+  // DOM
+  document.getElementById('pqStatus').textContent = `${Math.round(pqValue)} · ${ROUTES[routing].name}`;
+  document.getElementById('pqStatus').style.color = ROUTES[routing].color;
+}
+
+// ===== RENDER =====
+function render() {
+  const w = canvas.width, h = canvas.height;
+  const cx = w/2, cy = h/2;
+  const maxDim = Math.min(w, h);
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Hintergrund
+  const grad = ctx.createRadialGradient(cx, cy, 10, cx, cy, maxDim * 0.6);
+  grad.addColorStop(0, '#0a0a1a');
+  grad.addColorStop(0.5, '#050510');
+  grad.addColorStop(1, '#000000');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Routing-Ringe
+  const routeColors = {
+    palaise: '#00ff88',
+    arg: '#ffaa00',
+    whirl: '#ff66ff',
+    hub: '#00ccff'
+  };
+
+  const routeRanges = {
+    palaise: 0.1,
+    arg: 0.3,
+    whirl: 0.5,
+    hub: 0.7
+  };
+
+  for (const [key, range] of Object.entries(routeRanges)) {
+    const r = maxDim * (0.1 + range * 0.15);
+    const color = routeColors[key];
+    const isActive = routing === key;
+    ctx.shadowBlur = isActive ? 20 : 0;
+    ctx.shadowColor = isActive ? color + '44' : 'transparent';
+    ctx.strokeStyle = isActive ? color + '44' : color + '11';
+    ctx.lineWidth = isActive ? 2 : 0.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // PQ-Punkt
+  const angle = pqValue / 360 * Math.PI * 2;
+  const dist = maxDim * (0.1 + (pqValue / 360) * 0.25);
+  const x = cx + Math.cos(angle) * dist;
+  const y = cy + Math.sin(angle) * dist;
+
+  const routeColor = routeColors[routing] || '#ffaa00';
+  ctx.shadowColor = routeColor + '66';
+  ctx.shadowBlur = 30;
+  ctx.fillStyle = routeColor + '88';
+  ctx.beginPath();
+  ctx.arc(x, y, 5 + (pqValue / 360) * 4, 0, Math.PI * 2);
+  ctx.fill();
+
+  // WHIRL-Modus
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#ff66ff44';
+  ctx.font = `${maxDim * 0.02}px monospace`;
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText(`🌀 WHIRL · ${whirlMode}`, cx, h - 16);
+
+  // Routing-Info
+  ctx.fillStyle = '#445555';
+  ctx.font = `${maxDim * 0.015}px monospace`;
+  ctx.textBaseline = 'top';
+  ctx.fillText(`📍 ${ROUTES[routing].name} · ${Math.round(pqValue)}`, cx, 16);
+
+  // RESPO
+  ctx.fillStyle = '#ff66ff44';
+  ctx.font = `${maxDim * 0.015}px monospace`;
+  ctx.textBaseline = 'top';
+  ctx.textAlign = 'right';
+  ctx.fillText(`🔥 ${respoState}`, w - 16, 16);
+
+  // 243
+  ctx.fillStyle = '#ffaa0044';
+  ctx.font = `${maxDim * 0.015}px monospace`;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'bottom';
+  ctx.fillText('🌀 243 · PQ-ROOT', 16, h - 16);
+
+  // Zeit
+  const seconds = Math.floor(time / 1000);
+  const minutes = Math.floor(seconds / 60);
+  document.getElementById('timeStatus').textContent =
+    `${String(minutes).padStart(2, '0')}:${String(seconds % 60).padStart(2, '0')}`;
+}
+
+// ===== UPDATE =====
+function update() {
+  if (!running) return;
+  time += 16;
+  updatePQ();
+  render();
+  requestAnimationFrame(update);
+}
+
+// ===== TOGGLES =====
+function triggerPQ() {
+  document.getElementById('btnPQ').classList.toggle('active');
+  console.log('🌀 PQ getriggert');
+}
+
+function triggerWhirl() {
+  nextWhirl();
+  document.getElementById('btnWhirl').classList.toggle('active');
+}
+
+// ===== PROOF =====
+function showProof() {
+  const proof = document.createElement('div');
+  proof.style.cssText = `
+    position: fixed; inset: 0; background: rgba(0,0,0,0.85);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 9999; backdrop-filter: blur(20px);
+    font-family: 'Consolas', monospace;
+  `;
+  proof.innerHTML = `
+    <div style="text-align:center; padding:40px; border:1px solid rgba(255,170,0,0.1); border-radius:20px; background:rgba(10,10,20,0.6); max-width:450px;">
+      <div style="font-size:48px; color:#ffaa00;">🌀</div>
+      <div style="color:#ffaa00; font-size:20px; margin:12px 0; letter-spacing:4px;">243 · PQ‑ROOT</div>
+      <div style="color:#88ddbb; font-size:13px; line-height:1.8;">
+        📍 ROUTE: ${ROUTES[routing].name} (${Math.round(pqValue)})<br>
+        🌀 WHIRL: ${whirlMode}<br>
+        🔥 RESPO: ${respoState}<br>
+        📊 PALAISE: 0-99 · 🔍 ARG: 100-199<br>
+        🌀 WHIRL: 200-299 · 🌐 HUB: ≥300
+      </div>
+      <button onclick="this.parentElement.parentElement.remove()" style="
+        margin-top:14px; background:rgba(20,35,35,0.2); color:#668888;
+        border:1px solid rgba(255,255,255,0.02); padding:6px 20px;
+        border-radius:18px; cursor:pointer; font-family:inherit; font-size:9px;
+      ">⏎ SCHLIESSEN</button>
+    </div>
+  `;
+  document.body.appendChild(proof);
+}
+
+// ===== RESET =====
+function resetAll() {
+  pqValue = 0;
+  routing = 'palaise';
+  whirlMode = 'CORE';
+  whirlIndex = 0;
+  respoState = 'SYNTHESIS';
+  respoIndex = 0;
+  document.getElementById('btnStart').classList.remove('active');
+  document.getElementById('pqStatus').textContent = 'reset';
+  document.getElementById('whirlStatus').textContent = 'CORE';
+  document.querySelectorAll('.routing-card').forEach(card => {
+    card.style.borderColor = '';
+    card.style.background = '';
+  });
+}
+
+// ===== CONTROLS =====
+document.getElementById('btnStart').addEventListener('click', function() {
+  running = !running;
+  this.classList.toggle('active');
+  this.textContent = running ? '▶ START' : '⏸ PAUSE';
+  document.getElementById('pqStatus').textContent = running ? 'aktiv' : 'pausiert';
+  if (running) update();
+});
+
+document.getElementById('btnPQ').addEventListener('click', triggerPQ);
+document.getElementById('btnWhirl').addEventListener('click', triggerWhirl);
+document.getElementById('btnRespo').addEventListener('click', nextRespo);
+document.getElementById('btnProof').addEventListener('click', showProof);
+document.getElementById('btnReset').addEventListener('click', resetAll);
+
+// ===== TASTATUR =====
+document.addEventListener('keydown', (e) => {
+  if (e.key === ' ') { e.preventDefault(); document.getElementById('btnStart').click(); }
+  if (e.key === 'p' || e.key === 'P') document.getElementById('btnPQ').click();
+  if (e.key === 'w' || e.key === 'W') document.getElementById('btnWhirl').click();
+  if (e.key === 'r' || e.key === 'R') document.getElementById('btnRespo').click();
+  if (e.key === 'x' || e.key === 'X') document.getElementById('btnProof').click();
+  if (e.key === 'z' || e.key === 'Z') document.getElementById('btnReset').click();
+});
+
+// ===== INIT =====
+resizeCanvas();
+setTimeout(resizeCanvas, 200);
+update();
+
+console.log('🌀 243 · PQ‑ROOT · WHIRL · RESPO v2.43');
+console.log('📊 PALAISE: 0-99 · 🔍 ARG: 100-199 · 🌀 WHIRL: 200-299 · 🌐 HUB: ≥300');
+console.log('⌨️  Leertaste=Start  p=PQ  w=WHIRL  r=RESPO  x=PROOF  z=Reset');
 </script>
 
 </body>
 </html>
-
-
-<h1>GANG.SYSTEM.full — iki1uc</h1>
-<p>ROOT · Ordner · agent.js · Räume · Moves · RAW · eco · AIR · Diagnose</p>
-
-<div id="root-box" class="box"></div>
-<div id="chain-box" class="box"></div>
-<div id="rooms-box" class="box"></div>
-<div id="moves-box" class="box"></div>
-<div id="raw-box" class="box"></div>
-<div id="orbit-box" class="box"></div>
-<div id="pulse-box" class="box"></div>
-<div id="axiom-box" class="box"></div>
-<div id="eco-box" class="box"></div>
-<div id="air-box" class="box"></div>
-<div id="errors-box" class="box"></div>
-
-<script type="module">
-  import { GANG_SYSTEM_FULL } from "./GANG/GANG.SYSTEM.full.js";
-
-  async function load() {
-    const sys = await GANG_SYSTEM_FULL();
-
-    // ROOT
-    document.getElementById("root-box").innerHTML =
-      `<h2>ROOT</h2><div class="ok">${sys.root}</div>`;
-
-    // ORDNER-KETTE
-    let chainHTML = "<h2>Ordner-Kette</h2>";
-    sys.chain.forEach(item => {
-      const symbol = item.status === "OK" ? "⭕" : "❌";
-      const cls = item.status === "OK" ? "ok" : "err";
-      chainHTML += `<div class="${cls}">${symbol} ${item.folder} → ${item.agent || "NO_AGENT"}</div>`;
-    });
-    document.getElementById("chain-box").innerHTML = chainHTML;
-
-    // ROOMS
-    let roomsHTML = "<h2>Rooms</h2>";
-    sys.rooms.forEach(r => roomsHTML += `<div class="ok">🏛️ ${r}</div>`);
-    document.getElementById("rooms-box").innerHTML = roomsHTML;
-
-    // MOVES
-    let movesHTML = "<h2>Moves</h2>";
-    sys.moves.forEach(m => movesHTML += `<div class="ok">➡️ ${m}</div>`);
-    document.getElementById("moves-box").innerHTML = movesHTML;
-
-    // RAW
-    let rawHTML = "<h2>RAW</h2>";
-    sys.raw.forEach(r => rawHTML += `<div class="ok">⚡ ${r}</div>`);
-    document.getElementById("raw-box").innerHTML = rawHTML;
-
-    // ORBIT
-    let orbitHTML = "<h2>Orbit</h2>";
-    sys.orbit.forEach(o => orbitHTML += `<div class="ok">🌀 ${o}</div>`);
-    document.getElementById("orbit-box").innerHTML = orbitHTML;
-
-    // PULSE
-    let pulseHTML = "<h2>Pulse</h2>";
